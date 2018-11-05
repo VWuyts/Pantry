@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Voorraadkast</string>
+
+    <!-- category data -->
+    <string name="cat_vegetables">Groenten</string>
+    <string name="cat_cheese">Kaas</string>
+    <string name="cat_dairy">Zuivel</string>
+    <string name="cat_pasta">Pasta-Granen</string>
+    <string name="cat_breakfast">Ontbijt</string>
+    <string name="cat_spices">Specerijen</string>
+    <string name="cat_canned">Conserven</string>
+    <string name="cat_sauces">Sauzen</string>
+    <string name="cat_frozen">Diepvries</string>
+    <!-- item data -->
+    <string name="item_fruit_bananas">Bananen</string>
+    <string name="item_veg_onions">Uien</string>
+    <string name="item_veg_carrots">Wortelen</string>
+    <string name="item_veg_garlic">Knoflook</string>
+    <string name="item_cheese_parmesan">Parmezaan</string>
+    <string name="item_dairy_eggs">Eieren</string>
+    <string name="item_dairy_s_milk">Sojamelk</string>
+    <string name="item_dairy_soy_cream">Sojaroom</string>
+    <string name="item_pasta_wheat">Tarwe</string>
+    <string name="item_pasta_bulgar">Bulgur</string>
+    <string name="item_pasta_cous">Couscous</string>
+    <string name="item_pasta_noodles">Noedels</string>
+    <string name="item_pasta_lasagna">Lasagne</string>
+    <string name="item_pasta_wholegrain">Volle rijst</string>
+    <string name="item_pasta_arborio">Arborio rijst</string>
+    <string name="item_pasta_buckwheat">Boekweit</string>
+    <string name="item_breakfast_jam">Confituur</string>
+    <string name="item_breakfast_honey">Honing</string>
+    <string name="item_breakfast_corn">Maïswafels</string>
+    <string name="item_spices_salt">Zout</string>
+    <string name="item_spices_w_pepper">Witte peper</string>
+    <string name="item_spices_b_pepper">Zwarte peper</string>
+    <string name="item_spices_nutmeg">Muskaatnoot</string>
+    <string name="item_canned_kidney">Rode bonen</string>
+    <string name="item_canned_white">Witte bonen</string>
+    <string name="item_canned_t_cubes">Tomatenblokjes</string>
+    <string name="item_canned_t_paste">Tomatenpuree</string>
+    <string name="item_canned_gherkins">Augurken</string>
+    <string name="item_canned_onions">Ajuintjes</string>
+    <string name="item_canned_anchovies">Ansjovis</string>
+    <string name="item_sauce_mustard">Mosterd</string>
+    <string name="item_frozen_battered">Fishsticks</string>
+    <string name="item_frozen_peas">Erwten</string>
+    <!-- note data -->
+    <string name="note_bio_fair_trade">Bio en fair trade</string>
+    <!-- unit data -->
+    <string name="unit_piece">Stuk</string>
+    <string name="unit_bag">Zakje</string>
+    <string name="unit_box">Bakje</string>
+    <string name="unit_jar">Pot</string>
+    <string name="unit_bunch">Tros</string>
+    <string name="unit_bundle">Bussel</string>
+    <string name="unit_crate">Kist</string>
+    <string name="unit_tray">Karton</string>
+</resources>

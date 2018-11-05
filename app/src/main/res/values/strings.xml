@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">Pantry</string>
+
+    <!-- category data -->
+    <string name="cat_fruit" translatable="false">Fruit</string>
+    <string name="cat_vegetables">Vegetables</string>
+    <string name="cat_cheese">Cheese</string>
+    <string name="cat_dairy">Dairy</string>
+    <string name="cat_pasta">Pasta-Grains</string>
+    <string name="cat_breakfast">Breakfast</string>
+    <string name="cat_bakery">Bakery</string>
+    <string name="cat_spices">Spices</string>
+    <string name="cat_canned">Canned food</string>
+    <string name="cat_sauces">Sauces</string>
+    <string name="cat_frozen">Frozen food</string>
+    <!-- item data -->
+    <string name="item_fruit_bananas">Bananas</string>
+    <string name="item_veg_onions">Onions</string>
+    <string name="item_veg_carrots">Carrots</string>
+    <string name="item_veg_garlic">Garlic</string>
+    <string name="item_cheese_parmesan">Parmesan</string>
+    <string name="item_dairy_eggs">Eggs</string>
+    <string name="item_dairy_s_milk">Soy milk</string>
+    <string name="item_dairy_soy_cream">Soy cream</string>
+    <string name="item_pasta_wheat">Wheat</string>
+    <string name="item_pasta_bulgar">Bulgar</string>
+    <string name="item_pasta_cous">Cous cous</string>
+    <string name="item_pasta_noodles">Noodles</string>
+    <string name="item_pasta" translatable="false">Pasta</string>
+    <string name="item_pasta_gnocchi" translatable="false">Gnocchi</string>
+    <string name="item_pasta_quinoa" translatable="false">Quinoa</string>
+    <string name="item_pasta_spaghetti" translatable="false">Spaghetti</string>
+    <string name="item_pasta_cappellini" translatable="false">Cappellini</string>
+    <string name="item_pasta_tagliatelle" translatable="false">Tagliatelle</string>
+    <string name="item_pasta_penne" translatable="false">Penne</string>
+    <string name="item_pasta_lasagna">Lasagna</string>
+    <string name="item_pasta_wholegrain">Wholegrain rice</string>
+    <string name="item_pasta_arborio">Arborio rice</string>
+    <string name="item_pasta_buckwheat">Buckwheat</string>
+    <string name="item_breakfast_jam">Jam</string>
+    <string name="item_breakfast_honey">Honey</string>
+    <string name="item_breakfast_corn">Corn cakes</string>
+    <string name="item_spices_salt">Salt</string>
+    <string name="item_spices_w_pepper">White pepper</string>
+    <string name="item_spices_b_pepper">Black pepper</string>
+    <string name="item_spices_nutmeg">Nutmeg</string>
+    <string name="item_canned_kidney">Kidney beans</string>
+    <string name="item_canned_white">White beans</string>
+    <string name="item_canned_t_cubes">Tomato cubes</string>
+    <string name="item_canned_t_paste">Tomato paste</string>
+    <string name="item_canned_gherkins">Pickled gherkins</string>
+    <string name="item_canned_onions">Pickled onions</string>
+    <string name="item_canned_anchovies">Anchovies</string>
+    <string name="item_sauce_mustard">Mustard</string>
+    <string name="item_frozen_battered">Battered fish</string>
+    <string name="item_frozen_peas">Peas</string>
+    <!-- note data -->
+    <string name="note_bio_fair_trade">Bio and fair trade</string>
+    <!-- shop data -->
+    <string name="shop_bio_planet" translatable="false">Bio-Planet</string>
+    <string name="shop_colruyt" translatable="false">Colruyt</string>
+    <string name="shop_delhaize" translatable="false">Delhaize</string>
+    <!-- unit data -->
+    <string name="unit_g" translatable="false">g</string>
+    <string name="unit_kg" translatable="false">kg</string>
+    <string name="unit_piece">Piece</string>
+    <string name="unit_bag">Bag</string>
+    <string name="unit_box">Box</string>
+    <string name="unit_jar">Jar</string>
+    <string name="unit_bunch">Bunch</string>
+    <string name="unit_bundle">Bundle</string>
+    <string name="unit_crate">Crate</string>
+    <string name="unit_tray">Tray</string>
+</resources>
