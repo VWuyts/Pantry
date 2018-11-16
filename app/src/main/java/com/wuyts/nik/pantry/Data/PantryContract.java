@@ -5,6 +5,7 @@ import android.provider.BaseColumns;
 
 /**
  *  Created by Veronique Wuyts on 05/11/2018
+ *  Last updated on 16/11/2018
  */
 public final class PantryContract {
     public static final String AUTHORITY = "com.wuyts.nik.pantry.provider";
@@ -20,9 +21,8 @@ public final class PantryContract {
         public static final String TABLE_NAME = "item";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_CATEGORY = "category";
-        public static final String COLUMN_AMOUNT = "amount";
-        public static final String COLUMN_UNIT = "unit";
         public static final String COLUMN_SHOP = "shop";
         public static final String COLUMN_NOTE = "note";
+        public static final String COLUMN_IS_OK = "isInPantry";
     }
 }

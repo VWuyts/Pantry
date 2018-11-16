@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="fruit_data">
+        <item>@string/item_fruit_bananas</item>
+    </string-array>
+    <string-array name="veg_data">
+        <item>@string/item_veg_garlic</item>
+        <item>@string/item_veg_onions</item>
+    </string-array>
+    <string-array name="cheese_data">
+        <item>@string/item_cheese_parmesan</item>
+    </string-array>
+    <string-array name="dairy_data">
+        <item>@string/item_dairy_s_milk</item>
+        <item>@string/item_dairy_soy_cream</item>
+    </string-array>
+    <string-array name="pasta_data">
+        <item>@string/item_pasta_arborio</item>
+        <item>@string/item_pasta_buckwheat</item>
+        <item>@string/item_pasta_bulgar</item>
+        <item>@string/item_pasta_cappellini</item>
+        <item>@string/item_pasta_cous</item>
+        <item>@string/item_pasta_lasagna</item>
+        <item>@string/item_pasta_noodles</item>
+        <item>@string/item_pasta_penne</item>
+        <item>@string/item_pasta_quinoa</item>
+        <item>@string/item_pasta_wheat</item>
+        <item>@string/item_pasta_wholegrain</item>
+    </string-array>
+    <string-array name="breakfast_data">
+        <item>@string/item_breakfast_corn</item>
+        <item>@string/item_breakfast_honey</item>
+        <item>@string/item_breakfast_jam</item>
+    </string-array>
+    <string-array name="spices_data">
+        <item>@string/item_spices_salt</item>
+        <item>@string/item_spices_b_pepper</item>
+        <item>@string/item_spices_w_pepper</item>
+        <item>@string/item_spices_nutmeg</item>
+    </string-array>
+    <string-array name="canned_data">
+        <item>@string/item_canned_t_cubes</item>
+        <item>@string/item_canned_t_paste</item>
+        <item>@string/item_canned_white</item>
+        <item>@string/item_canned_white</item>
+        <item>@string/item_canned_onions</item>
+        <item>@string/item_canned_gherkins</item>
+    </string-array>
+    <string-array name="sauces_data">
+        <item>@string/item_sauce_mustard</item>
+    </string-array>
+    <string-array name="frozen_data">
+        <item>@string/item_frozen_peas</item>
+        <item>@string/item_frozen_battered</item>
+    </string-array>
+</resources>

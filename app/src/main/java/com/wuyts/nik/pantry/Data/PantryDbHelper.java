@@ -8,6 +8,7 @@ import com.wuyts.nik.pantry.Utilities.DbFiller;
 
 /**
  *  Created by Veronique Wuyts on 05/11/2018
+ *  Last updated on 16/11/2018
  */
 public class PantryDbHelper extends SQLiteOpenHelper {
     // Database name and version
@@ -23,10 +24,9 @@ public class PantryDbHelper extends SQLiteOpenHelper {
                     PantryContract.Item._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     PantryContract.Item.COLUMN_NAME + " TEXT NOT NULL, " +
                     PantryContract.Item.COLUMN_CATEGORY + " TEXT NOT NULL, " +
-                    PantryContract.Item.COLUMN_AMOUNT + " INTEGER, " +
-                    PantryContract.Item.COLUMN_UNIT + " TEXT, " +
                     PantryContract.Item.COLUMN_SHOP + " TEXT, " +
-                    PantryContract.Item.COLUMN_NOTE + " TEXT)";
+                    PantryContract.Item.COLUMN_NOTE + " TEXT, " +
+                    PantryContract.Item.COLUMN_IS_OK + " INTEGER NOT NULL DEFAULT 1)";
 
     // SQL statement to delete table item
     private static final String SQL_DELETE_ITEM = "DROP TABLE IF EXISTS " +

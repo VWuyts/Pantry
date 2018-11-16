@@ -1,23 +1,24 @@
 package com.wuyts.nik.pantry.Utilities;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.wuyts.nik.pantry.R;
 
 import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_NAME;
 import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_CATEGORY;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_AMOUNT;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_UNIT;
 import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_SHOP;
 import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_NOTE;
+import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_IS_OK;
 import static com.wuyts.nik.pantry.Data.PantryContract.Item.CONTENT_URI;
 
 /**
  *  Created by Veronique Wuyts on 05/11/2018
+ *  Last updated on 16/11/2018
  */
 public class DbFiller {
-    ContentValues itemValues;
     Context mContext;
 
     public DbFiller(Context context) {
@@ -25,40 +26,91 @@ public class DbFiller {
     }
 
     public void addItems() {
-        itemValues = new ContentValues();
+        ContentValues itemValues = new ContentValues();
+        ContentResolver contentResolver = mContext.getContentResolver();
+        Resources resources = mContext.getResources();
 
-        itemValues.put(COLUMN_NAME, mContext.getString(R.string.item_canned_white));
-        itemValues.put(COLUMN_CATEGORY, mContext.getString(R.string.cat_canned));
-        itemValues.put(COLUMN_AMOUNT, 3);
-        itemValues.put(COLUMN_UNIT, mContext.getString(R.string.unit_jar));
-        itemValues.put(COLUMN_SHOP, mContext.getString(R.string.shop_colruyt));
-        mContext.getContentResolver().insert(CONTENT_URI, itemValues);
-        itemValues.clear();
-
-        itemValues.put(COLUMN_NAME, mContext.getString(R.string.item_fruit_bananas));
-        itemValues.put(COLUMN_CATEGORY, mContext.getString(R.string.cat_fruit));
-        itemValues.put(COLUMN_AMOUNT, 1);
-        itemValues.put(COLUMN_UNIT, mContext.getString(R.string.unit_kg));
-        itemValues.put(COLUMN_SHOP, mContext.getString(R.string.shop_delhaize));
-        itemValues.put(COLUMN_NOTE, mContext.getString(R.string.note_bio_fair_trade));
-        mContext.getContentResolver().insert(CONTENT_URI, itemValues);
-        itemValues.clear();
-
-        itemValues.put(COLUMN_NAME, mContext.getString(R.string.item_veg_onions));
-        itemValues.put(COLUMN_CATEGORY, mContext.getString(R.string.cat_vegetables));
-        itemValues.put(COLUMN_SHOP, mContext.getString(R.string.shop_delhaize));
-        mContext.getContentResolver().insert(CONTENT_URI, itemValues);
-        itemValues.clear();
-
-        itemValues.put(COLUMN_NAME, mContext.getString(R.string.item_veg_garlic));
-        itemValues.put(COLUMN_CATEGORY, mContext.getString(R.string.cat_vegetables));
-        itemValues.put(COLUMN_SHOP, mContext.getString(R.string.shop_delhaize));
-        mContext.getContentResolver().insert(CONTENT_URI, itemValues);
-        itemValues.clear();
-
-        itemValues.put(COLUMN_NAME, mContext.getString(R.string.item_veg_carrots));
-        itemValues.put(COLUMN_CATEGORY, mContext.getString(R.string.cat_vegetables));
-        mContext.getContentResolver().insert(CONTENT_URI, itemValues);
-        itemValues.clear();
+        for(String item : resources.getStringArray(R.array.canned_data)) {
+            itemValues.put(COLUMN_NAME, item);
+            itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_canned));
+            itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_colruyt));
+            itemValues.put(COLUMN_IS_OK, true);
+            contentResolver.insert(CONTENT_URI, itemValues);
+            itemValues.clear();
+        }
+        for(String item : resources.getStringArray(R.array.pasta_data)) {
+            itemValues.put(COLUMN_NAME, item);
+            itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_pasta));
+            itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_colruyt));
+            itemValues.put(COLUMN_IS_OK, true);
+            contentResolver.insert(CONTENT_URI, itemValues);
+            itemValues.clear();
+        }
+        for(String item : resources.getStringArray(R.array.breakfast_data)) {
+            itemValues.put(COLUMN_NAME, item);
+            itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_breakfast));
+            itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_delhaize));
+            itemValues.put(COLUMN_IS_OK, true);
+            contentResolver.insert(CONTENT_URI, itemValues);
+            itemValues.clear();
+        }
+        for(String item : resources.getStringArray(R.array.dairy_data)) {
+            itemValues.put(COLUMN_NAME, item);
+            itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_dairy));
+            itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_colruyt));
+            itemValues.put(COLUMN_IS_OK, true);
+            contentResolver.insert(CONTENT_URI, itemValues);
+            itemValues.clear();
+        }
+        for(String item : resources.getStringArray(R.array.cheese_data)) {
+            itemValues.put(COLUMN_NAME, item);
+            itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_cheese));
+            itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_delhaize));
+            itemValues.put(COLUMN_IS_OK, true);
+            contentResolver.insert(CONTENT_URI, itemValues);
+            itemValues.clear();
+        }
+        for(String item : resources.getStringArray(R.array.sauces_data)) {
+            itemValues.put(COLUMN_NAME, item);
+            itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_sauces));
+            itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_delhaize));
+            itemValues.put(COLUMN_IS_OK, true);
+            contentResolver.insert(CONTENT_URI, itemValues);
+            itemValues.clear();
+        }
+        for(String item : resources.getStringArray(R.array.spices_data)) {
+            itemValues.put(COLUMN_NAME, item);
+            itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_spices));
+            itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_delhaize));
+            itemValues.put(COLUMN_IS_OK, true);
+            contentResolver.insert(CONTENT_URI, itemValues);
+            itemValues.clear();
+        }
+        for(String item : resources.getStringArray(R.array.fruit_data)) {
+            itemValues.put(COLUMN_NAME, item);
+            itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_fruit));
+            itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_delhaize));
+            itemValues.put(COLUMN_NOTE, resources.getString(R.string.note_bio_fair_trade));
+            itemValues.put(COLUMN_IS_OK, true);
+            contentResolver.insert(CONTENT_URI, itemValues);
+            itemValues.clear();
+        }
+        for(String item : resources.getStringArray(R.array.veg_data)) {
+            itemValues.put(COLUMN_NAME, item);
+            itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_vegetables));
+            itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_delhaize));
+            itemValues.put(COLUMN_NOTE, resources.getString(R.string.note_bio));
+            itemValues.put(COLUMN_IS_OK, true);
+            contentResolver.insert(CONTENT_URI, itemValues);
+            itemValues.clear();
+        }
+        for(String item : resources.getStringArray(R.array.frozen_data)) {
+            itemValues.put(COLUMN_NAME, item);
+            itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_frozen));
+            itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_delhaize));
+            itemValues.put(COLUMN_IS_OK, true);
+            contentResolver.insert(CONTENT_URI, itemValues);
+            itemValues.clear();
+        }
     }
 }

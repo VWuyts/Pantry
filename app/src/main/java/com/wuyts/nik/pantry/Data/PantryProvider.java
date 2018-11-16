@@ -18,6 +18,7 @@ import static com.wuyts.nik.pantry.Data.PantryContract.ITEM_PATH;
 
 /**
  *  Created by Veronique Wuyts on 05/11/2018
+ *  Last updated on 16/11/2018
  */
 public class PantryProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
