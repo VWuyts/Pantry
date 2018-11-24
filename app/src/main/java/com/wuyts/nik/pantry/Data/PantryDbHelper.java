@@ -8,7 +8,6 @@ import com.wuyts.nik.pantry.Utilities.DbFiller;
 
 /**
  *  Created by Veronique Wuyts on 05/11/2018
- *  Last updated on 16/11/2018
  */
 public class PantryDbHelper extends SQLiteOpenHelper {
     // Database name and version
@@ -44,8 +43,8 @@ public class PantryDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_ITEM);
 
         // Fill table
-        DbFiller dbFiller = new DbFiller(mContext);
-        dbFiller.addItems();
+        /*DbFiller dbFiller = new DbFiller(mContext);
+        dbFiller.addItems();*/
     }
 
     @Override

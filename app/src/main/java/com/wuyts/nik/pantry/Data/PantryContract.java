@@ -5,7 +5,6 @@ import android.provider.BaseColumns;
 
 /**
  *  Created by Veronique Wuyts on 05/11/2018
- *  Last updated on 16/11/2018
  */
 public final class PantryContract {
     public static final String AUTHORITY = "com.wuyts.nik.pantry.provider";

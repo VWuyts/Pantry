@@ -18,7 +18,6 @@ import static com.wuyts.nik.pantry.Data.PantryContract.ITEM_PATH;
 
 /**
  *  Created by Veronique Wuyts on 05/11/2018
- *  Last updated on 16/11/2018
  */
 public class PantryProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
@@ -28,7 +27,7 @@ public class PantryProvider extends ContentProvider {
 
     public static UriMatcher buildUriMatcher() {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        // Uri for complete item table
+        // Uri for complete pantry item table
         uriMatcher.addURI(AUTHORITY, ITEM_PATH, ALL_ITEMS);
         // Uri for one row in item table
         uriMatcher.addURI(AUTHORITY, ITEM_PATH + "/#", ITEM_ID);
@@ -48,7 +47,8 @@ public class PantryProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         final SQLiteDatabase db = mPantryDbHelper.getReadableDatabase();
-        if (TextUtils.isEmpty(sortOrder)) sortOrder = "_ID ASC";
+        if (TextUtils.isEmpty(sortOrder)) sortOrder = PantryContract.Item._ID + " ASC";
+
         Cursor itemData;
         int match = sUriMatcher.match(uri);
 
@@ -63,7 +63,6 @@ public class PantryProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown URI: " + uri);
         }
 
-        db.close();
         return itemData;
     }
 
@@ -94,9 +93,8 @@ public class PantryProvider extends ContentProvider {
         }
 
         // Notify registered observers that a row was updated
-        //getContext().getContentResolver().notifyChange(uri, null);
+        getContext().getContentResolver().notifyChange(uri, null);
 
-        db.close();
         return returnUri;
     }
 
@@ -116,7 +114,6 @@ public class PantryProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown URI: " + uri);
         }
 
-        db.close();
         return noDeleted;
     }
 
