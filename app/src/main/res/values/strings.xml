@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Pantry</string>
+    <string name="checkbox">checkbox is in pantry</string>
+    <string name="placeholder_category" translatable="false">item category</string>
     <string name="placeholder_name" translatable="false">item name</string>
+    <string name="placeholder_note" translatable="false">item note</string>
     <string name="placeholder_shop" translatable="false">item shop</string>
+    <string name="title_detail_activity">Pantry item</string>
 
     <!-- category data -->
     <string name="cat_fruit" translatable="false">Fruit</string>

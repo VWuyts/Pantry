@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Voorraadkast</string>
+    <string name="checkbox">checkbox in voorraadkast</string>
+    <string name="title_detail_activity">Voorraadkast item</string>
 
     <!-- category data -->
     <string name="cat_vegetables">Groenten</string>

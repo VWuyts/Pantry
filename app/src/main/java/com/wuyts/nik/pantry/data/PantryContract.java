@@ -1,4 +1,4 @@
-package com.wuyts.nik.pantry.Data;
+package com.wuyts.nik.pantry.data;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -8,8 +8,8 @@ import android.provider.BaseColumns;
  */
 public final class PantryContract {
     public static final String AUTHORITY = "com.wuyts.nik.pantry.provider";
-    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
     public static final String ITEM_PATH = "item";
+    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
     private PantryContract() {}
 

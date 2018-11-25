@@ -2,9 +2,11 @@
 <resources>
     <!-- Material design color: lime -->
     <!-- Ref: https://material.io/guidelines/style/color.html#color-color-palette -->
-    <color name="lime">#CDDC39</color>
-    <color name="limeDark">#AFB42B</color>
+    <color name="colorPrimary">#80CBC4</color>
+    <color name="colorPrimaryDark">#009688</color>
+    <color name="colorAccent">#1DE9B6</color>
 
+    <color name="background">#E0F2F1</color>
     <color name="red">#FF0000</color>
     <color name="text_grey">#999999</color>
 </resources>

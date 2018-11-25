@@ -12,7 +12,6 @@
         android:text="@string/placeholder_name"
         android:textSize="@dimen/text_size_large"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:paddingStart="@dimen/padding_default"
         android:paddingLeft="@dimen/padding_default"
         android:paddingTop="@dimen/padding_default"

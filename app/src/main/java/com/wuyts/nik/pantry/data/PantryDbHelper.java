@@ -1,10 +1,8 @@
-package com.wuyts.nik.pantry.Data;
+package com.wuyts.nik.pantry.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.wuyts.nik.pantry.Utilities.DbFiller;
 
 /**
  *  Created by Veronique Wuyts on 05/11/2018
@@ -13,9 +11,6 @@ public class PantryDbHelper extends SQLiteOpenHelper {
     // Database name and version
     public static final String DATABASE_NAME = "pantry.db";
     public static final int DATABASE_VERSION = 1;
-
-    // Context
-    private Context mContext;
 
     // SQL statement to create table item
     private static final String SQL_CREATE_ITEM =
@@ -34,17 +29,12 @@ public class PantryDbHelper extends SQLiteOpenHelper {
     // Constructor
     public PantryDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        mContext = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create table
         db.execSQL(SQL_CREATE_ITEM);
-
-        // Fill table
-        /*DbFiller dbFiller = new DbFiller(mContext);
-        dbFiller.addItems();*/
     }
 
     @Override

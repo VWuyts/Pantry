@@ -1,13 +1,13 @@
-package com.wuyts.nik.pantry.Data;
+package com.wuyts.nik.pantry.data;
 
 import android.database.Cursor;
 
 import static android.provider.BaseColumns._ID;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_NAME;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_CATEGORY;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_SHOP;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_NOTE;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_IS_OK;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NAME;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_CATEGORY;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_SHOP;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NOTE;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_IS_OK;
 
 /**
  *  Created by Veronique Wuyts on 24/11/2018

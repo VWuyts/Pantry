@@ -1,4 +1,4 @@
-package com.wuyts.nik.pantry.Data;
+package com.wuyts.nik.pantry.data;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -13,8 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import static com.wuyts.nik.pantry.Data.PantryContract.AUTHORITY;
-import static com.wuyts.nik.pantry.Data.PantryContract.ITEM_PATH;
+import static com.wuyts.nik.pantry.data.PantryContract.AUTHORITY;
+import static com.wuyts.nik.pantry.data.PantryContract.ITEM_PATH;
 
 /**
  *  Created by Veronique Wuyts on 05/11/2018
@@ -25,7 +25,7 @@ public class PantryProvider extends ContentProvider {
     private static final int ALL_ITEMS = 100;
     private static final int ITEM_ID = 101;
 
-    public static UriMatcher buildUriMatcher() {
+    private static UriMatcher buildUriMatcher() {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         // Uri for complete pantry item table
         uriMatcher.addURI(AUTHORITY, ITEM_PATH, ALL_ITEMS);

@@ -9,17 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wuyts.nik.pantry.Data.PantryItem;
+import com.wuyts.nik.pantry.data.PantryItem;
 
 /**
  *  Created by Veronique Wuyts on 24/11/2018
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
-    private Cursor mCursor;
+    private final Cursor mCursor;
     private final ListItemClickListener mListItemClickListener;
-    private boolean mDataValid;
-    private int mIdColumn;
+    private final boolean mDataValid;
+    private final int mIdColumn;
 
     public ItemAdapter(Cursor cursor, ListItemClickListener listener) {
         mCursor = cursor;
@@ -34,8 +34,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.pantry_item, parent, false);
-        ItemViewHolder viewHolder = new ItemViewHolder(view);
-        return viewHolder;
+        return new ItemViewHolder(view);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         final TextView nameTV;
         final TextView shopTV;
 
-        public ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
             nameTV = itemView.findViewById(R.id.tv_name);
             shopTV = itemView.findViewById(R.id.tv_shop);

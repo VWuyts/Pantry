@@ -1,4 +1,4 @@
-package com.wuyts.nik.pantry.Utilities;
+package com.wuyts.nik.pantry.utilities;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -7,18 +7,18 @@ import android.content.res.Resources;
 
 import com.wuyts.nik.pantry.R;
 
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_NAME;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_CATEGORY;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_SHOP;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_NOTE;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.COLUMN_IS_OK;
-import static com.wuyts.nik.pantry.Data.PantryContract.Item.CONTENT_URI;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NAME;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_CATEGORY;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_SHOP;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NOTE;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_IS_OK;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.CONTENT_URI;
 
 /**
  *  Created by Veronique Wuyts on 05/11/2018
  */
 public class DbFiller {
-    Context mContext;
+    private final Context mContext;
 
     public DbFiller(Context context) {
         mContext = context;
