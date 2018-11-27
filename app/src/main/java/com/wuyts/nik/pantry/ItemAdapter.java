@@ -3,6 +3,7 @@ package com.wuyts.nik.pantry;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         if (pantryItem != null) {
             holder.nameTV.setText(pantryItem.getName());
             holder.shopTV.setText(pantryItem.getShop());
+            if (pantryItem.isInPantry()) {
+                holder.itemCL.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.lightGreen));
+            } else {
+                holder.itemCL.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.lightRed));
+            }
         }
     }
 
@@ -73,11 +79,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         // Declarations of views in view holder
         final TextView nameTV;
         final TextView shopTV;
+        final ConstraintLayout itemCL;
 
         ItemViewHolder(View itemView) {
             super(itemView);
             nameTV = itemView.findViewById(R.id.tv_name);
             shopTV = itemView.findViewById(R.id.tv_shop);
+            itemCL = itemView.findViewById(R.id.cl_pantry_item);
             itemView.setOnClickListener(this);
         }
 

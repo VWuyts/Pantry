@@ -99,7 +99,7 @@ public class DbFiller {
             itemValues.put(COLUMN_CATEGORY, resources.getString(R.string.cat_vegetables));
             itemValues.put(COLUMN_SHOP, resources.getString(R.string.shop_delhaize));
             itemValues.put(COLUMN_NOTE, resources.getString(R.string.note_bio));
-            itemValues.put(COLUMN_IS_OK, true);
+            itemValues.put(COLUMN_IS_OK, false);
             contentResolver.insert(CONTENT_URI, itemValues);
             itemValues.clear();
         }
