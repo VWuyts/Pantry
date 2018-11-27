@@ -119,7 +119,21 @@ public class PantryProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        // TODO: implement update
-        return 0;
+        final SQLiteDatabase db = mPantryDbHelper.getWritableDatabase();
+        int noUpdated;
+        int match = sUriMatcher.match(uri);
+
+        switch(match) {
+            case ALL_ITEMS:
+                noUpdated = db.update(PantryContract.Item.TABLE_NAME, values, null, null);
+                break;
+            case ITEM_ID:
+                noUpdated = db.update(PantryContract.Item.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown URI: " + uri);
+        }
+
+        return noUpdated;
     }
 }

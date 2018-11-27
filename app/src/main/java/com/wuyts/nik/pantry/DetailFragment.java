@@ -48,7 +48,7 @@ public class DetailFragment extends Fragment {
                 itemID = intent.getLongExtra(MainFragment.ITEM_ID_KEY, 0);
                 // Get data of pantry item
                 String selection = _ID + " = ?";
-                String selectionArgs[] = {Long.toString(itemID)};
+                String[] selectionArgs = {Long.toString(itemID)};
                 Uri selectedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemID)).build();
                 mItemCursor = getActivity().getContentResolver().query(selectedItem, null, selection, selectionArgs, null);
             }

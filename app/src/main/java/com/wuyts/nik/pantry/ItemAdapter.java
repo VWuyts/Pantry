@@ -12,21 +12,23 @@ import android.widget.TextView;
 
 import com.wuyts.nik.pantry.data.PantryItem;
 
+import static android.provider.BaseColumns._ID;
+
 /**
  *  Created by Veronique Wuyts on 24/11/2018
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
-    private final Cursor mCursor;
+    private Cursor mCursor;
     private final ListItemClickListener mListItemClickListener;
-    private final boolean mDataValid;
-    private final int mIdColumn;
+    private boolean mDataValid;
+    private int mIdColumn;
 
     public ItemAdapter(Cursor cursor, ListItemClickListener listener) {
         mCursor = cursor;
         mListItemClickListener = listener;
         mDataValid = mCursor != null;
-        mIdColumn = mDataValid ? mCursor.getColumnIndex("_id") : -1;
+        mIdColumn = mDataValid ? mCursor.getColumnIndex(_ID) : -1;
         setHasStableIds(true);
     }
 
@@ -69,6 +71,18 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         if (mDataValid && mCursor.moveToPosition(position))
             return mCursor.getLong(mIdColumn);
         return 0;
+    }
+
+    public Cursor swapCursor(Cursor newCursor) {
+        if (newCursor == mCursor) {
+            return null;
+        }
+        Cursor oldCursor = mCursor;
+        mCursor = newCursor;
+        mDataValid = mCursor != null;
+        mIdColumn = mDataValid ? mCursor.getColumnIndex(_ID) : -1;
+        notifyDataSetChanged();
+        return oldCursor;
     }
 
     public interface ListItemClickListener {
