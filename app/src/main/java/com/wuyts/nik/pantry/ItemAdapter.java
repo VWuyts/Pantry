@@ -30,7 +30,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         mDataValid = mCursor != null;
         mIdColumn = mDataValid ? mCursor.getColumnIndex(_ID) : -1;
         setHasStableIds(true);
-    }
+    } // end constructor
 
     @NonNull
     @Override
@@ -38,7 +38,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         Context context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.pantry_item, parent, false);
         return new ItemViewHolder(view);
-    }
+    } // end onCreateViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
@@ -59,21 +59,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 holder.itemCL.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.lightRed));
             }
         }
-    }
+    } // end onBindViewHolder
 
     @Override
     public int getItemCount() {
         return mCursor.getCount();
-    }
+    } // end getItemCount
 
     @Override
     public long getItemId(int position) {
         if (mDataValid && mCursor.moveToPosition(position))
             return mCursor.getLong(mIdColumn);
         return 0;
-    }
+    } // end getItemId
 
-    public Cursor swapCursor(Cursor newCursor) {
+    Cursor swapCursor(Cursor newCursor) {
         if (newCursor == mCursor) {
             return null;
         }
@@ -83,11 +83,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         mIdColumn = mDataValid ? mCursor.getColumnIndex(_ID) : -1;
         notifyDataSetChanged();
         return oldCursor;
-    }
+    } // end swapCursor
 
     public interface ListItemClickListener {
         void onListItemClick(int itemPosition);
-    }
+    } // end interface ListItemClickListener
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Declarations of views in view holder
@@ -109,5 +109,5 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             int clickedPosition = getAdapterPosition();
             mListItemClickListener.onListItemClick(clickedPosition);
         }
-    }
+    } // end class ItemViewHolder
 }

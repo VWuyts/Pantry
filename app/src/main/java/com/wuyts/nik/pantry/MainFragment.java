@@ -1,20 +1,16 @@
 package com.wuyts.nik.pantry;
 
-import android.content.ContentValues;
-import android.content.Intent;
+import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.wuyts.nik.pantry.utilities.DbFiller;
 
@@ -30,11 +26,25 @@ import static com.wuyts.nik.pantry.data.PantryContract.Item.CONTENT_URI;
 public class MainFragment extends Fragment implements ItemAdapter.ListItemClickListener {
     private Cursor mItemsCursor;
     private ItemAdapter mItemAdapter;
-    public static final String ITEM_ID_KEY = "itemId";
+    private ItemTouchHelper mItemTouchHelper;
+    private OnListItemSelectedListener mOnListItemSelectedListener;
+    private OnSwipeLeftListener mOnSwipeLeftListener;
+    private RecyclerView mItemsRV;
 
     public MainFragment() {
         // Required empty public constructor
-    }
+    } // end constructor
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnListItemSelectedListener = (OnListItemSelectedListener)context;
+            mOnSwipeLeftListener = (OnSwipeLeftListener)context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnListItemSelectedListener and OnSwipeLeftListener");
+        }
+    } // end onAttach
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,56 +53,56 @@ public class MainFragment extends Fragment implements ItemAdapter.ListItemClickL
 
         // Content provider: get pantry items
         String[] projection = {_ID, COLUMN_NAME, COLUMN_SHOP, COLUMN_IS_OK};
-        mItemsCursor = getActivity().getContentResolver().query(CONTENT_URI, projection, null, null, null);
-        if (mItemsCursor != null && mItemsCursor.getCount() == 0) {
-            // Add items to pantry
-            DbFiller dbFiller = new DbFiller(getContext());
-            dbFiller.addItems();
+        if (this.isAdded()) { // Check if fragment is added to activity, so that getActivity() cannot return null
             mItemsCursor = getActivity().getContentResolver().query(CONTENT_URI, projection, null, null, null);
+            if (mItemsCursor != null && mItemsCursor.getCount() == 0) {
+                // Add items to pantry
+                DbFiller dbFiller = new DbFiller(getContext());
+                dbFiller.addItems();
+                mItemsCursor = getActivity().getContentResolver().query(CONTENT_URI, projection, null, null, null);
+            }
         }
 
         // RecyclerView
-        RecyclerView itemsRV = rootView.findViewById(R.id.rv_pantry_items);
-        itemsRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        itemsRV.setHasFixedSize(true);
+        mItemsRV = rootView.findViewById(R.id.rv_pantry_items);
+        mItemsRV.setLayoutManager(new LinearLayoutManager(getContext()));
+        mItemsRV.setHasFixedSize(true);
         mItemAdapter = new ItemAdapter(mItemsCursor, this);
-        itemsRV.setAdapter(mItemAdapter);
+        mItemsRV.setAdapter(mItemAdapter);
 
         // Swipe to toggle isInPantry
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(itemsRV);
+        mItemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        mItemTouchHelper.attachToRecyclerView(mItemsRV);
 
         return rootView;
-    }
+    } // end OnCreateView
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mItemsCursor.close();
+    } // end onDestroyView
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mOnListItemSelectedListener = null;
+        mOnSwipeLeftListener = null;
+    } // end onDetach
 
     @Override
     public void onListItemClick(int itemPosition) {
-        long itemID = mItemAdapter.getItemId(itemPosition);
-        Toast.makeText(getContext(), "clicked: " + itemID, Toast.LENGTH_LONG).show();
-        if (!MainActivity.mMasterDetail) {
-            Intent detailIntent = new Intent(getContext(), DetailActivity.class);
-            detailIntent.putExtra(ITEM_ID_KEY, itemID);
-            startActivity(detailIntent);
-        } else {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            DetailFragment detailFragment = new DetailFragment();
+        long itemId = mItemAdapter.getItemId(itemPosition);
+        mOnListItemSelectedListener.onListItemSelected(itemId);
+    } // end onListItemClick
 
-            // Set pantry item data in detail fragment
-            // Get data of pantry item
-            String selection = _ID + " = ?";
-            String[] selectionArgs = {Long.toString(itemID)};
-            Uri selectedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemID)).build();
-            Cursor itemCursor = getActivity().getContentResolver().query(selectedItem, null, selection, selectionArgs, null);
-            detailFragment.setItemCursor(itemCursor);
+    public void swapCursor(Cursor newCursor) {
+        mItemsCursor = newCursor;
+        Cursor oldCursor = mItemAdapter.swapCursor(mItemsCursor);
+        oldCursor.close();
+    } // end swapCursor
 
-            // Display fragment
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fr_detail, detailFragment)
-                    .commit();
-        }
-    }
-
-    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+    private final ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
             return true; // true if moved, false otherwise
@@ -101,38 +111,21 @@ public class MainFragment extends Fragment implements ItemAdapter.ListItemClickL
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             long itemID = mItemAdapter.getItemId(viewHolder.getAdapterPosition());
-            toggleIsInPantry(itemID);
-            mItemAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+            mOnSwipeLeftListener.onSwipeLeft(itemID);
+            // mItemAdapter.notifyItemChanged(viewHolder.getAdapterPosition()); // does not restore ViewHolder
+            // Ref: https://stackoverflow.com/questions/31787272/android-recyclerview-itemtouchhelper-revert-swipe-and-restore-view-holder
+            mItemTouchHelper.attachToRecyclerView(null);
+            mItemTouchHelper.attachToRecyclerView(mItemsRV);
         }
     };
 
-    private void toggleIsInPantry(long itemID) {
-        boolean isInPantry;
-        Cursor oldCursor;
-        String[] projection = {COLUMN_IS_OK};
-        String selection = _ID + " = ?";
-        String[] selectionArgs = {Long.toString(itemID)};
-        Uri swipedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemID)).build();
-        Cursor itemCursor = getActivity().getContentResolver().query(swipedItem, projection, selection, selectionArgs, null);
-
-        if (itemCursor != null && itemCursor.moveToFirst()) {
-            isInPantry = itemCursor.getInt(itemCursor.getColumnIndex(COLUMN_IS_OK)) > 0;
-            itemCursor.close();
-            // Change isInPantry in database
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_IS_OK, !isInPantry);
-            getActivity().getContentResolver().update(swipedItem, values, selection, selectionArgs);
-            // Change the content of the recycler view
-            projection = new String[]{_ID, COLUMN_NAME, COLUMN_SHOP, COLUMN_IS_OK};
-            mItemsCursor = getActivity().getContentResolver().query(CONTENT_URI, projection, null, null, null);
-            oldCursor = mItemAdapter.swapCursor(mItemsCursor);
-            oldCursor.close();
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mItemsCursor.close();
-    }
+    // Container Activity must implement these interfaces
+    // Ref: https://developer.android.com/training/basics/fragments/communicating
+    // Ref: https://developer.android.com/guide/components/fragments#CommunicatingWithActivity
+    public interface OnListItemSelectedListener {
+        void onListItemSelected(long itemId);
+    } // end interface onListItemSelectedListener
+    public interface OnSwipeLeftListener {
+        void onSwipeLeft(long itemId);
+    } // end interface OnSwipeLeftListener
 }

@@ -30,6 +30,10 @@ public class PantryItem {
         this.isInPantry = isInPantry;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getName() {
         return this.name;
     }

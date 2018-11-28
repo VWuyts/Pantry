@@ -2,7 +2,9 @@
     <string name="app_name">Voorraadkast</string>
     <string name="checkbox">checkbox in voorraadkast</string>
     <string name="label_category">Categorie:</string>
+    <string name="label_in_pantry">Aanwezig in voorraadkast</string>
     <string name="label_note">Notitie:</string>
+    <string name="label_not_in_pantry">Niet aanwezig in voorraadkast</string>
     <string name="label_shop">Winkel:</string>
 
     <!-- category data -->
