@@ -49,6 +49,10 @@
                 android:resource="@xml/pantry_app_widget_info" />
         </receiver>
 
+        <service
+            android:name="PantryWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>

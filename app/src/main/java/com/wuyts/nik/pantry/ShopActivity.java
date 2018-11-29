@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -26,7 +25,6 @@ import static com.wuyts.nik.pantry.data.PantryContract.Item.CONTENT_URI;
 
 public class ShopActivity extends AppCompatActivity {
     private Cursor mCursor;
-    private SimpleCursorAdapter mAdapter;
     private String mShop;
     public static final String SHOP_KEY = "shop";
 
@@ -47,15 +45,6 @@ public class ShopActivity extends AppCompatActivity {
         String[] selectionArgs = {"0", mShop};
         mCursor = getContentResolver().query(CONTENT_URI, projection, selection, selectionArgs, null);
 
-        // Toolbar
-        Toolbar toolbar = findViewById(R.id.tb_shop);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(mShop);
-        }
-
         // Setup views
         ListView shopsLV = findViewById(R.id.lv_shop_items);
         TextView emptyListTV = findViewById(R.id.tv_no_shop_items);
@@ -63,13 +52,22 @@ public class ShopActivity extends AppCompatActivity {
             // Setup ListView with SimpleCursorAdapter
             String[] fromColumns = {COLUMN_NAME, COLUMN_NOTE};
             int[] toViews = {R.id.tv_shop_item_name, R.id.tv_shop_item_note};
-            mAdapter = new SimpleCursorAdapter(this, R.layout.pantry_item_to_shop, mCursor, fromColumns, toViews, 0);
-            shopsLV.setAdapter(mAdapter);
+            SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.pantry_item_to_shop, mCursor, fromColumns, toViews, 0);
+            shopsLV.setAdapter(adapter);
             shopsLV.setVisibility(View.VISIBLE);
             emptyListTV.setVisibility(View.GONE);
         } else {
             shopsLV.setVisibility(View.GONE);
             emptyListTV.setVisibility(View.VISIBLE);
+        }
+
+        // Toolbar
+        Toolbar toolbar = findViewById(R.id.tb_shop);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(mShop);
         }
     } // end onCreate
 

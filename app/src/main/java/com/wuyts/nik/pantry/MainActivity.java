@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
         MainFragment.OnListItemSelectedListener, MainFragment.OnSwipeLeftListener {
 
     private ArrayList<String> mShopList;
-    public static boolean mMasterDetail = false;
+    private static boolean mMasterDetail = false;
     public static final String ITEM_ID_KEY = "itemId";
     public static final String UPDATE_CURSOR_KEY = "update cursor";
 
@@ -53,6 +53,12 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
     } // end onCreate
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mShopList.clear();
+    } // end onDestroy
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

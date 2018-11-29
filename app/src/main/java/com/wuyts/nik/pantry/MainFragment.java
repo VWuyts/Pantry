@@ -53,8 +53,9 @@ public class MainFragment extends Fragment implements ItemAdapter.ListItemClickL
 
         // Content provider: get pantry items
         String[] projection = {_ID, COLUMN_NAME, COLUMN_SHOP, COLUMN_IS_OK};
-        if (this.isAdded()) { // Check if fragment is added to activity, so that getActivity() cannot return null
-            mItemsCursor = getActivity().getContentResolver().query(CONTENT_URI, projection, null, null, null);
+        Context context = getActivity();
+        if (context != null) { // Check if fragment is added to activity, so that getActivity() cannot return null
+            mItemsCursor = context.getContentResolver().query(CONTENT_URI, projection, null, null, null);
             if (mItemsCursor != null && mItemsCursor.getCount() == 0) {
                 // Add items to pantry
                 DbFiller dbFiller = new DbFiller(getContext());

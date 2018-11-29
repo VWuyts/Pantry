@@ -23,6 +23,7 @@ public class PantryProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private PantryDbHelper mPantryDbHelper;
     private static final int ALL_ITEMS = 100;
+    private static final int ALL_ITEMS_GROUP_BY = 1000;
     private static final int ITEM_ID = 101;
 
     private static UriMatcher buildUriMatcher() {
@@ -31,6 +32,8 @@ public class PantryProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, ITEM_PATH, ALL_ITEMS);
         // Uri for one row in item table
         uriMatcher.addURI(AUTHORITY, ITEM_PATH + "/#", ITEM_ID);
+        // Uri for complete pantry items table with groupBy implementation
+        uriMatcher.addURI(AUTHORITY, ITEM_PATH + "/#", ALL_ITEMS_GROUP_BY);
 
         return uriMatcher;
     } // end buildUriMatcher
@@ -50,6 +53,8 @@ public class PantryProvider extends ContentProvider {
         if (TextUtils.isEmpty(sortOrder)) sortOrder = PantryContract.Item._ID + " ASC";
 
         Cursor itemData;
+        String[] projectionCount = {PantryContract.Item.COLUMN_SHOP, "COUNT(*)"};
+        String groupbBy = PantryContract.Item.COLUMN_SHOP;
         int match = sUriMatcher.match(uri);
 
         switch (match) {
@@ -59,12 +64,16 @@ public class PantryProvider extends ContentProvider {
             case ITEM_ID:
                 itemData = db.query(PantryContract.Item.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
+            case ALL_ITEMS_GROUP_BY:
+                itemData = db.query(PantryContract.Item.TABLE_NAME, projectionCount, selection, selectionArgs, groupbBy, null, sortOrder);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown URI: " + uri);
         }
 
         return itemData;
     } // end query
+
 
     @Nullable
     @Override
@@ -93,7 +102,10 @@ public class PantryProvider extends ContentProvider {
         }
 
         // Notify registered observers that a row was updated
-        getContext().getContentResolver().notifyChange(uri, null);
+        Context context = getContext();
+        if (context != null) {
+            context.getContentResolver().notifyChange(uri, null);
+        }
 
         return returnUri;
     } // end insert

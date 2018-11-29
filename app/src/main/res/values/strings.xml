@@ -19,6 +19,7 @@
     <!-- app widget -->
     <string name="aw_overview_label">Products needed:</string>
     <string name="aw_placeholder_number" translatable="false">10</string>
+    <string name="aw_placeholder_shop" translatable="false">Shop:</string>
     <string name="aw_title">Your pantry</string>
 
     <!-- category data -->

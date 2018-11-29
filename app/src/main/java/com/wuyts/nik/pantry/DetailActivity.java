@@ -25,7 +25,7 @@ public class DetailActivity extends AppCompatActivity
         setContentView(R.layout.activity_detail);
 
         Intent intent = getIntent();
-        if (intent != null & intent.hasExtra(MainActivity.ITEM_ID_KEY)) {
+        if (intent != null && intent.hasExtra(MainActivity.ITEM_ID_KEY)) {
             long itemId = intent.getLongExtra(MainActivity.ITEM_ID_KEY, 0);
 
             // Get data of pantry item
