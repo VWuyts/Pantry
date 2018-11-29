@@ -97,6 +97,10 @@ public class MainFragment extends Fragment implements ItemAdapter.ListItemClickL
     } // end onListItemClick
 
     public void swapCursor(Cursor newCursor) {
+        if (mItemsCursor == newCursor) {
+            return;
+        }
+
         mItemsCursor = newCursor;
         Cursor oldCursor = mItemAdapter.swapCursor(mItemsCursor);
         oldCursor.close();

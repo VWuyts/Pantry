@@ -1,15 +1,25 @@
 <resources>
+    <!-- app -->
+    <string name="all_done">All done</string>
     <string name="app_name">Pantry</string>
     <string name="checkbox">checkbox is in pantry</string>
+    <string name="go_to_shop">Go shopping at</string>
     <string name="label_category">Category:</string>
     <string name="label_in_pantry">Present in pantry</string>
     <string name="label_note">Note:</string>
     <string name="label_not_in_pantry">Not present in pantry</string>
     <string name="label_shop">Shop:</string>
+    <string name="pantry_filled">Your pantry is filled!</string>
     <string name="placeholder_category" translatable="false">item category</string>
     <string name="placeholder_name" translatable="false">item name</string>
     <string name="placeholder_note" translatable="false">item note</string>
     <string name="placeholder_shop" translatable="false">item shop</string>
+    <string name="title_detail_activity">Pantry item</string>
+
+    <!-- app widget -->
+    <string name="aw_overview_label">Products needed:</string>
+    <string name="aw_placeholder_number" translatable="false">10</string>
+    <string name="aw_title">Your pantry</string>
 
     <!-- category data -->
     <string name="cat_fruit" translatable="false">Fruit</string>
@@ -62,9 +72,4 @@
     <!-- shop data -->
     <string name="shop_colruyt" translatable="false">Colruyt</string>
     <string name="shop_delhaize" translatable="false">Delhaize</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

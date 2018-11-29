@@ -7,7 +7,12 @@ import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_IS_OK;
@@ -22,8 +27,11 @@ public class MainActivity extends AppCompatActivity
         implements DetailFragment.OnToggleIsInPantryListener,
         MainFragment.OnListItemSelectedListener, MainFragment.OnSwipeLeftListener {
 
+    private ArrayList<String> mShopList;
     public static boolean mMasterDetail = false;
     public static final String ITEM_ID_KEY = "itemId";
+    public static final String UPDATE_CURSOR_KEY = "update cursor";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +43,60 @@ public class MainActivity extends AppCompatActivity
         }
 
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(DetailActivity.UPDATE_CURSOR_KEY)) {
-            if (intent.getBooleanExtra(DetailActivity.UPDATE_CURSOR_KEY, true)) {
-                updateCursor();
+        if (intent != null && intent.hasExtra(UPDATE_CURSOR_KEY)) {
+            if (intent.getBooleanExtra(UPDATE_CURSOR_KEY, true)) {
+                updateMainCursor();
             }
         }
+
+        // Toolbar
+        Toolbar toolbar = findViewById(R.id.tb_main);
+        setSupportActionBar(toolbar);
     } // end onCreate
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Get shop data
+        String[] projection = {"DISTINCT " + COLUMN_SHOP};
+        String sortOrder = COLUMN_SHOP + " ASC";
+        Cursor shopCursor = getContentResolver().query(CONTENT_URI, projection, null, null, sortOrder);
+
+        // No menu shown if no shops in cursor
+        if (shopCursor == null || shopCursor.getCount() == 0) {
+            return false;
+        }
+
+        // Add shop data to ArrayList
+        mShopList = new ArrayList<>();
+        while (shopCursor.moveToNext()) {
+            mShopList.add(shopCursor.getString(shopCursor.getColumnIndex(COLUMN_SHOP)));
+        }
+        shopCursor.close();
+
+        // Add different shops to menu
+        int counter = -1;
+        for (String shop : mShopList) {
+            menu.add(Menu.NONE, ++counter, menu.NONE, getResources().getString(R.string.go_to_shop) + " " + shop)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        }
+
+        return true;
+    } // end onCreateOptionsMenu
+
+    // React to selection of items in the menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        int menuItemId = menuItem.getItemId();
+        if (menuItemId < mShopList.size()) {
+            String shop = mShopList.get(menuItemId);
+            Intent shopIntent = new Intent(MainActivity.this, ShopActivity.class);
+            shopIntent.putExtra(ShopActivity.SHOP_KEY, shop);
+            startActivity(shopIntent);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(menuItem);
+        }
+    } // end onOptionsItemSelected
 
     @Override
     public void onToggleIsInPantry(long itemId, boolean isInPantry) {
@@ -48,13 +104,7 @@ public class MainActivity extends AppCompatActivity
 
         // Change cursor in detail fragment
         if (mMasterDetail) {
-            String selection = _ID + " = ?";
-            String[] selectionArgs = {Long.toString(itemId)};
-            Uri selectedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemId)).build();
-            Cursor itemCursor = getContentResolver().query(selectedItem, null, selection, selectionArgs, null);
-            DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.fr_detail);
-            Cursor oldCursor = detailFragment.swapCursor(itemCursor);
-            oldCursor.close();
+            updateDetailCursor(itemId);
         }
     } // end onToggleIsInPantry
 
@@ -65,14 +115,10 @@ public class MainActivity extends AppCompatActivity
             detailIntent.putExtra(ITEM_ID_KEY, itemId);
             startActivity(detailIntent);
         } else {
-
             DetailFragment detailFragment = new DetailFragment();
 
-            // Get data of pantry item
-            String selection = _ID + " = ?";
-            String[] selectionArgs = {Long.toString(itemId)};
-            Uri selectedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemId)).build();
-            Cursor itemCursor = getContentResolver().query(selectedItem, null, selection, selectionArgs, null);
+            // Set data of pantry item
+            Cursor itemCursor = getPantryItem(itemId, null);
             detailFragment.setItemCursor(itemCursor);
 
             // Display fragment
@@ -84,7 +130,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.fr_detail, detailFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-            //getSupportFragmentManager().beginTransaction().replace(R.id.fr_detail, detailFragment).commit();
         }
     } // end onListItemSelected
 
@@ -93,10 +138,7 @@ public class MainActivity extends AppCompatActivity
         // Get isInPantry data of pantry item
         boolean isInPantry;
         String[] projection = {COLUMN_IS_OK};
-        String selection = _ID + " = ?";
-        String[] selectionArgs = {Long.toString(itemId)};
-        Uri swipedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemId)).build();
-        Cursor itemCursor = getContentResolver().query(swipedItem, projection, selection, selectionArgs, null);
+        Cursor itemCursor = getPantryItem(itemId, projection);
 
         if (itemCursor != null && itemCursor.moveToFirst()) {
             isInPantry = itemCursor.getInt(itemCursor.getColumnIndex(COLUMN_IS_OK)) > 0;
@@ -110,7 +152,17 @@ public class MainActivity extends AppCompatActivity
         }
     } // end onSwipeLeft
 
-    public void toggleIsInPantry(long itemId, boolean isInPantry) {
+
+    /* Utility functions */
+
+    private Cursor getPantryItem(long itemId, String[] projection) {
+        String selection = _ID + " = ?";
+        String[] selectionArgs = {Long.toString(itemId)};
+        Uri requiredItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemId)).build();
+        return getContentResolver().query(requiredItem, projection, selection, selectionArgs, null);
+    } // end getPantryItem
+
+    private void toggleIsInPantry(long itemId, boolean isInPantry) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_IS_OK, !isInPantry);
         String itemIdStr = Long.toString(itemId);
@@ -122,30 +174,26 @@ public class MainActivity extends AppCompatActivity
         getContentResolver().update(updateItem, values, selection, selectionArgs);
 
         // Change cursor in MainFragment
-        updateCursor();
+        updateMainCursor();
     } // end toggleIsInPantry
 
-    private void updateCursor() {
+    private void updateDetailCursor(long itemId) {
+        String selection = _ID + " = ?";
+        String[] selectionArgs = {Long.toString(itemId)};
+        Uri selectedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemId)).build();
+        Cursor itemCursor = getContentResolver().query(selectedItem, null, selection, selectionArgs, null);
+        DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.fr_detail);
+        Cursor oldCursor = detailFragment.swapCursor(itemCursor);
+        oldCursor.close();
+    } // end updateDetailCursor
+
+    private void updateMainCursor() {
         MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.fr_main);
         if (mainFragment != null) {
             String[] projection = {_ID, COLUMN_NAME, COLUMN_SHOP, COLUMN_IS_OK};
             Cursor newCursor = getContentResolver().query(CONTENT_URI, projection, null, null, null);
             mainFragment.swapCursor(newCursor);
         }
-    } // end updateCursor
+    } // end updateMainCursor
 
-    /*private void displayDetailFragment(long itemId) {
-        DetailFragment detailFragment = new DetailFragment();
-
-        // Get data of pantry item
-        String selection = _ID + " = ?";
-        String[] selectionArgs = {Long.toString(itemId)};
-        Uri selectedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemId)).build();
-        Cursor itemCursor = getContentResolver().query(selectedItem, null, selection, selectionArgs, null);
-        // Set pantry item data in detail fragment
-        detailFragment.setItemCursor(itemCursor);
-
-        // Display fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.fr_detail, detailFragment).commit();
-    } // end displayDetailFragment*/
 }

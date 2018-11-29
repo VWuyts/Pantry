@@ -33,7 +33,7 @@ public class PantryProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, ITEM_PATH + "/#", ITEM_ID);
 
         return uriMatcher;
-    }
+    } // end buildUriMatcher
 
     @Override
     public boolean onCreate() {
@@ -41,7 +41,7 @@ public class PantryProvider extends ContentProvider {
         mPantryDbHelper = new PantryDbHelper(context);
 
         return true;
-    }
+    }// end onCreate
 
     @Nullable
     @Override
@@ -54,7 +54,7 @@ public class PantryProvider extends ContentProvider {
 
         switch (match) {
             case ALL_ITEMS:
-                itemData = db.query(PantryContract.Item.TABLE_NAME, projection, null, null, null, null, sortOrder);
+                itemData = db.query(PantryContract.Item.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case ITEM_ID:
                 itemData = db.query(PantryContract.Item.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
@@ -64,13 +64,13 @@ public class PantryProvider extends ContentProvider {
         }
 
         return itemData;
-    }
+    } // end query
 
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
         return null;
-    }
+    } // end getType
 
     @Nullable
     @Override
@@ -96,7 +96,7 @@ public class PantryProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri, null);
 
         return returnUri;
-    }
+    } // end insert
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
@@ -115,7 +115,7 @@ public class PantryProvider extends ContentProvider {
         }
 
         return noDeleted;
-    }
+    } // end delete
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
@@ -125,7 +125,7 @@ public class PantryProvider extends ContentProvider {
 
         switch(match) {
             case ALL_ITEMS:
-                noUpdated = db.update(PantryContract.Item.TABLE_NAME, values, null, null);
+                noUpdated = db.update(PantryContract.Item.TABLE_NAME, values, selection, selectionArgs);
                 break;
             case ITEM_ID:
                 noUpdated = db.update(PantryContract.Item.TABLE_NAME, values, selection, selectionArgs);
@@ -135,5 +135,5 @@ public class PantryProvider extends ContentProvider {
         }
 
         return noUpdated;
-    }
+    } // end update
 }

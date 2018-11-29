@@ -65,7 +65,7 @@ public class PantryItem {
         boolean isInPantry = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_OK)) > 0;
 
         return new PantryItem(id, name, "", shop, "", isInPantry);
-    }
+    } // end fromCursorMain
 
     public static PantryItem fromCursorDetail(Cursor cursor) {
         if (cursor == null) {
@@ -80,5 +80,5 @@ public class PantryItem {
         boolean isInPantry = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_OK)) > 0;
 
         return new PantryItem(id, name, category, shop, note, isInPantry);
-    }
+    } // end fromCursorDetail
 }
