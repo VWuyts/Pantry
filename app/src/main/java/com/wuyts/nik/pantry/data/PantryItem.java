@@ -9,9 +9,6 @@ import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_SHOP;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NOTE;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_IS_OK;
 
-/**
- *  Created by Veronique Wuyts on 24/11/2018
- */
 public class PantryItem {
     private final long id;
     private final String name;

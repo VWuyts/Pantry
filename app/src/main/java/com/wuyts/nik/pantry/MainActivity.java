@@ -1,5 +1,7 @@
 package com.wuyts.nik.pantry;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
@@ -20,9 +21,6 @@ import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NAME;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_SHOP;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.CONTENT_URI;
 
-/**
- *  Created by Veronique Wuyts on 05/11/2018
- */
 public class MainActivity extends AppCompatActivity
         implements DetailFragment.OnToggleIsInPantryListener,
         MainFragment.OnListItemSelectedListener, MainFragment.OnSwipeLeftListener {
@@ -31,7 +29,6 @@ public class MainActivity extends AppCompatActivity
     private static boolean mMasterDetail = false;
     public static final String ITEM_ID_KEY = "itemId";
     public static final String UPDATE_CURSOR_KEY = "update cursor";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,8 +176,9 @@ public class MainActivity extends AppCompatActivity
         // Change pantry item in database
         getContentResolver().update(updateItem, values, selection, selectionArgs);
 
-        // Change cursor in MainFragment
+        // Update main fragment and widget data
         updateMainCursor();
+        updateWidget();
     } // end toggleIsInPantry
 
     private void updateDetailCursor(long itemId) {
@@ -189,8 +187,10 @@ public class MainActivity extends AppCompatActivity
         Uri selectedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemId)).build();
         Cursor itemCursor = getContentResolver().query(selectedItem, null, selection, selectionArgs, null);
         DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.fr_detail);
-        Cursor oldCursor = detailFragment.swapCursor(itemCursor);
-        oldCursor.close();
+        if (detailFragment != null) {
+            Cursor oldCursor = detailFragment.swapCursor(itemCursor);
+            oldCursor.close();
+        }
     } // end updateDetailCursor
 
     private void updateMainCursor() {
@@ -202,4 +202,9 @@ public class MainActivity extends AppCompatActivity
         }
     } // end updateMainCursor
 
+    private void updateWidget() {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, PantryAppWidget.class));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.aw_lv_shops);
+    } // end updateWidget
 }

@@ -15,10 +15,8 @@ import android.text.TextUtils;
 
 import static com.wuyts.nik.pantry.data.PantryContract.AUTHORITY;
 import static com.wuyts.nik.pantry.data.PantryContract.ITEM_PATH;
+import static com.wuyts.nik.pantry.data.PantryContract.SUMMARY_PATH;
 
-/**
- *  Created by Veronique Wuyts on 05/11/2018
- */
 public class PantryProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private PantryDbHelper mPantryDbHelper;
@@ -30,10 +28,10 @@ public class PantryProvider extends ContentProvider {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         // Uri for complete pantry item table
         uriMatcher.addURI(AUTHORITY, ITEM_PATH, ALL_ITEMS);
+        // Uri for complete pantry items table with groupBy implementation
+        uriMatcher.addURI(AUTHORITY, ITEM_PATH + "/" + SUMMARY_PATH, ALL_ITEMS_GROUP_BY);
         // Uri for one row in item table
         uriMatcher.addURI(AUTHORITY, ITEM_PATH + "/#", ITEM_ID);
-        // Uri for complete pantry items table with groupBy implementation
-        uriMatcher.addURI(AUTHORITY, ITEM_PATH + "/#", ALL_ITEMS_GROUP_BY);
 
         return uriMatcher;
     } // end buildUriMatcher
@@ -54,18 +52,18 @@ public class PantryProvider extends ContentProvider {
 
         Cursor itemData;
         String[] projectionCount = {PantryContract.Item.COLUMN_SHOP, "COUNT(*)"};
-        String groupbBy = PantryContract.Item.COLUMN_SHOP;
+        String groupBy = PantryContract.Item.COLUMN_SHOP;
         int match = sUriMatcher.match(uri);
 
         switch (match) {
             case ALL_ITEMS:
                 itemData = db.query(PantryContract.Item.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
+            case ALL_ITEMS_GROUP_BY:
+                itemData = db.query(PantryContract.Item.TABLE_NAME, projectionCount, selection, selectionArgs, groupBy, null, sortOrder);
+                break;
             case ITEM_ID:
                 itemData = db.query(PantryContract.Item.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-                break;
-            case ALL_ITEMS_GROUP_BY:
-                itemData = db.query(PantryContract.Item.TABLE_NAME, projectionCount, selection, selectionArgs, groupbBy, null, sortOrder);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown URI: " + uri);
@@ -144,6 +142,12 @@ public class PantryProvider extends ContentProvider {
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown URI: " + uri);
+        }
+
+        // Notify registered observers that a row was updated
+        Context context = getContext();
+        if (context != null) {
+            context.getContentResolver().notifyChange(uri, null);
         }
 
         return noUpdated;

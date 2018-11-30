@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:baselineAligned="false">
 
-    <android.support.v7.widget.Toolbar
+    <include
         android:id="@+id/tb_shop"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="@dimen/elevation_default"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        layout="@layout/toolbar" />
     <ListView
         android:id="@+id/lv_shop_items"
         android:layout_width="match_parent"

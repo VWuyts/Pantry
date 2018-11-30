@@ -20,9 +20,6 @@ import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NAME;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_SHOP;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.CONTENT_URI;
 
-/**
- * Created by Veronique Wuyts on 26/11/2018
- */
 public class MainFragment extends Fragment implements ItemAdapter.ListItemClickListener {
     private Cursor mItemsCursor;
     private ItemAdapter mItemAdapter;
@@ -109,7 +106,7 @@ public class MainFragment extends Fragment implements ItemAdapter.ListItemClickL
 
     private final ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
         @Override
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return true; // true if moved, false otherwise
         }
 

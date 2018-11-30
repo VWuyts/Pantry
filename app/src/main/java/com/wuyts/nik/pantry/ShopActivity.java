@@ -1,5 +1,7 @@
 package com.wuyts.nik.pantry;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,6 @@ import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NAME;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NOTE;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_SHOP;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.CONTENT_URI;
-
 
 public class ShopActivity extends AppCompatActivity {
     private Cursor mCursor;
@@ -100,13 +100,16 @@ public class ShopActivity extends AppCompatActivity {
 
 
     /* Utility function */
+
     private void setAllDone(String shop) {
-        boolean emptyShop = TextUtils.isEmpty(shop);
-        String selection = emptyShop ? null : COLUMN_SHOP + " = ?";
-        String[] selectionArgs = emptyShop ? null : new String[]{shop};
+        String selection = COLUMN_SHOP + " = ?";
+        String[] selectionArgs = new String[]{shop};
         ContentValues values = new ContentValues();
         values.put(COLUMN_IS_OK, 1);
         getContentResolver().update(CONTENT_URI, values, selection, selectionArgs);
+
+        // Update widget data
+        updateWidget();
 
         // Go back to MainActivity
         Intent mainIntent = new Intent(ShopActivity.this, MainActivity.class);
@@ -114,4 +117,10 @@ public class ShopActivity extends AppCompatActivity {
         mainIntent.putExtra(MainActivity.UPDATE_CURSOR_KEY, true);
         startActivity(mainIntent);
     }
+
+    private void updateWidget() {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, PantryAppWidget.class));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.aw_lv_shops);
+    } // end updateWidget
 }

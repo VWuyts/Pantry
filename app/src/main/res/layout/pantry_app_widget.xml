@@ -28,22 +28,39 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_m"
         android:padding="@dimen/widget_padding" />
+    <Button
+        android:id="@+id/aw_btn_all_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/aw_tv_overview_label"
+        android:text="@string/all_done"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_l"
+        android:drawableStart="@drawable/ic_done_all_black_24dp"
+        android:drawableLeft="@drawable/ic_done_all_black_24dp"
+        android:background="@android:color/transparent"
+        android:paddingStart="@dimen/widget_padding"
+        android:paddingLeft="@dimen/widget_padding"
+        android:paddingEnd="@dimen/widget_padding"
+        android:paddingRight="@dimen/widget_padding" />
     <ListView
         android:id="@+id/aw_lv_shops"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/aw_tv_overview_label" />
+        android:layout_below="@id/aw_btn_all_done" />
     <TextView
         android:id="@+id/aw_tv_empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/aw_tv_overview_label"
+        android:layout_below="@id/aw_btn_all_done"
         android:text="@string/pantry_filled"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_m"
+        android:textSize="@dimen/text_size_xl"
         android:padding="@dimen/widget_padding"/>
 
 </RelativeLayout>

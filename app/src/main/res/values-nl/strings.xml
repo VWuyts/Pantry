@@ -1,6 +1,6 @@
 <resources>
     <!-- app -->
-    <string name="all_done">Helemaal klaar</string>
+    <string name="all_done">Helemaal klaar!</string>
     <string name="app_name">Voorraadkast</string>
     <string name="checkbox">checkbox in voorraadkast</string>
     <string name="go_to_shop">Ga winkelen bij</string>

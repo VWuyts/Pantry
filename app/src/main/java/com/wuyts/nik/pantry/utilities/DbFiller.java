@@ -14,9 +14,6 @@ import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NOTE;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_IS_OK;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.CONTENT_URI;
 
-/**
- *  Created by Veronique Wuyts on 05/11/2018
- */
 public class DbFiller {
     private final Context mContext;
 

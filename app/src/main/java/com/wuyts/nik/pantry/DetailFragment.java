@@ -14,9 +14,6 @@ import android.widget.TextView;
 
 import com.wuyts.nik.pantry.data.PantryItem;
 
-/**
- *  Created by Veronique Wuyts on 26/11/2018
- */
 public class DetailFragment extends Fragment {
     private Button mSetInPantryBtn;
     private Button mSetNotInPantryBtn;

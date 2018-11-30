@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,7 +31,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-
         </activity>
 
         <provider
@@ -50,9 +49,11 @@
         </receiver>
 
         <service
-            android:name="PantryWidgetService"
+            android:name=".PantryWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-
+        <service
+            android:name=".PantryIntentService"
+            android:exported="false" />
     </application>
 
 </manifest>

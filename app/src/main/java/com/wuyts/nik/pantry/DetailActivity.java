@@ -13,9 +13,6 @@ import static android.provider.BaseColumns._ID;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_IS_OK;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.CONTENT_URI;
 
-/**
- *  Created by Veronique Wuyts on 05/11/2018
- */
 public class DetailActivity extends AppCompatActivity
         implements DetailFragment.OnToggleIsInPantryListener {
 
@@ -34,10 +31,11 @@ public class DetailActivity extends AppCompatActivity
             Uri selectedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemId)).build();
             Cursor itemCursor = getContentResolver().query(selectedItem, null, selection, selectionArgs, null);
             DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_detail);
-            detailFragment.setItemCursor(itemCursor);
-
-            // Display fragment
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_detail, detailFragment).commit();
+            if (detailFragment != null) {
+                detailFragment.setItemCursor(itemCursor);
+                // Display fragment
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_detail, detailFragment).commit();
+            }
 
             // Toolbar
             Toolbar toolbar = findViewById(R.id.tb_detail);

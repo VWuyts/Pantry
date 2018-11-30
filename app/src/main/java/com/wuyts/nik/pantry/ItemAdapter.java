@@ -14,9 +14,6 @@ import com.wuyts.nik.pantry.data.PantryItem;
 
 import static android.provider.BaseColumns._ID;
 
-/**
- *  Created by Veronique Wuyts on 24/11/2018
- */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
     private Cursor mCursor;

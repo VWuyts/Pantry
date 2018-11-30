@@ -13,14 +13,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/aw_placeholder_shop"
-        android:textSize="@dimen/text_size_xl"
+        android:textSize="@dimen/text_size_l"
         android:textColor="@color/white" />
     <TextView
         android:id="@+id/aw_tv_no_items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/aw_placeholder_number"
-        android:textSize="@dimen/text_size_xl"
+        android:textSize="@dimen/text_size_l"
         android:textColor="@color/white"
         android:paddingStart="@dimen/padding_default"
         android:paddingLeft="@dimen/padding_default"

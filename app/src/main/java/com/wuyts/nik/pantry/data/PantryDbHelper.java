@@ -4,9 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- *  Created by Veronique Wuyts on 05/11/2018
- */
 public class PantryDbHelper extends SQLiteOpenHelper {
     // Database name and version
     public static final String DATABASE_NAME = "pantry.db";
