@@ -5,7 +5,7 @@
     android:id="@+id/tb_main"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/teal_500"
+    android:background="?attr/colorPrimary"
     android:elevation="@dimen/elevation_default"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
