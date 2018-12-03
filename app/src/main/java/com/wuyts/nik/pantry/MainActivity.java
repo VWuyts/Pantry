@@ -3,16 +3,24 @@ package com.wuyts.nik.pantry;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
@@ -26,7 +34,7 @@ public class MainActivity extends AppCompatActivity
         MainFragment.OnListItemSelectedListener, MainFragment.OnSwipeLeftListener {
 
     private ArrayList<String> mShopList;
-    private static boolean mMasterDetail = false;
+    private static boolean mMasterDetail;
     public static final String ITEM_ID_KEY = "itemId";
     public static final String UPDATE_CURSOR_KEY = "update cursor";
 
@@ -35,9 +43,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (findViewById(R.id.ll_two_pane) != null) {
-            mMasterDetail = true;
-        }
+        View detailFragment = findViewById(R.id.fr_detail);
+        mMasterDetail = detailFragment != null && detailFragment.getVisibility() == View.VISIBLE;
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(UPDATE_CURSOR_KEY)) {
@@ -47,8 +54,37 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Toolbar
-        Toolbar toolbar = findViewById(R.id.tb_main);
+        Toolbar toolbar = mMasterDetail ? (Toolbar) findViewById(R.id.tb_main) : (Toolbar) findViewById(R.id.tb_in_ctb);
         setSupportActionBar(toolbar);
+        if (mMasterDetail) {
+            toolbar.setTitle(R.string.title_main_activity);
+        } else {
+            CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.ctb);
+            collapsingToolbarLayout.setTitle(getResources().getString(R.string.title_main_activity));
+        }
+
+        // Set click listener on FAB
+        final FloatingActionButton fab = findViewById(R.id.fab_main);
+        final Context context = this;
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "add pantry item not yet implemented", Toast.LENGTH_LONG).show();
+            }
+        });
+        // Hide FAB when scrolling down
+        RecyclerView recyclerView = findViewById(R.id.rv_pantry_items);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
+                    fab.hide();
+                } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
+                    fab.show();
+                }
+            }
+        });
     } // end onCreate
 
     @Override

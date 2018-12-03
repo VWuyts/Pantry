@@ -11,6 +11,7 @@
     <string name="label_shop">Winkel:</string>
     <string name="pantry_filled">Je voorraadkast is gevuld!</string>
     <string name="title_detail_activity">Voorraadkast item</string>
+    <string name="title_main_activity">Mijn voorraadkast</string>
 
     <!-- app widget -->
     <string name="aw_overview_label">Producten nodig:</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="appbar_height">168dp</dimen>
     <dimen name="elevation_default">4dp</dimen>
     <dimen name="elevation_fab">6dp</dimen>
     <dimen name="elevation_fab_max">12dp</dimen>

@@ -7,15 +7,6 @@
     android:orientation="horizontal"
     android:background="@color/teal_500"
     android:padding="@dimen/padding_default" >
-    <!-- android:background="@color/teal_500" -->
-
-    <!--
-    android:textSize="@dimen/text_size_l"
-        android:background="@android:color/transparent"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-     -->
     <TextView
         android:id="@+id/aw_tv_shop"
         android:text="@string/aw_placeholder_shop"

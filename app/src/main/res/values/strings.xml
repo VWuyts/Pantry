@@ -15,6 +15,7 @@
     <string name="placeholder_note" translatable="false">item note</string>
     <string name="placeholder_shop" translatable="false">item shop</string>
     <string name="title_detail_activity">Pantry item</string>
+    <string name="title_main_activity">My pantry</string>
 
     <!-- app widget -->
     <string name="aw_overview_label">Products needed:</string>
