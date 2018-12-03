@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/teal_900"
     android:padding="@dimen/widget_margin">
 
     <TextView
@@ -15,8 +15,9 @@
         android:contentDescription="@string/aw_title"
         android:text="@string/aw_title"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_xxl"
-        android:textStyle="bold" />
+        android:textSize="@dimen/text_size_xl"
+        android:textStyle="bold"
+        android:textAllCaps="true" />
     <TextView
         android:id="@+id/aw_tv_overview_label"
         android:layout_width="wrap_content"
@@ -26,7 +27,7 @@
         android:layout_below="@id/aw_tv_title"
         android:text="@string/aw_overview_label"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_m"
+        android:textSize="@dimen/text_size_l"
         android:padding="@dimen/widget_padding" />
     <Button
         android:id="@+id/aw_btn_all_done"
@@ -36,10 +37,11 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/aw_tv_overview_label"
         android:text="@string/all_done"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/teal_A400"
         android:textSize="@dimen/text_size_l"
-        android:drawableStart="@drawable/ic_done_all_black_24dp"
-        android:drawableLeft="@drawable/ic_done_all_black_24dp"
+        android:textAllCaps="false"
+        android:drawableStart="@drawable/ic_done_all_teal_a400_24dp"
+        android:drawableLeft="@drawable/ic_done_all_teal_a400_24dp"
         android:background="@android:color/transparent"
         android:paddingStart="@dimen/widget_padding"
         android:paddingLeft="@dimen/widget_padding"

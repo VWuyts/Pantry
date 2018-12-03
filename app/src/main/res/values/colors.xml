@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Material design color: Teal -->
-    <!-- Ref: https://material.io/design/color/#tools-for-picking-colors -->
-    <color name="colorPrimary">#00796B</color>
-    <color name="colorPrimaryDark">#004D40</color>
-    <color name="colorAccent">#1DE9B6</color>
+    <color name="teal_50">#E0F2F1</color>
+    <color name="teal_500">#009688</color>
+    <color name="teal_900">#004D40</color>
+    <color name="teal_A400">#1DE9B6</color>
 
-    <color name="green">#008B00</color>
-    <color name="grey">#999999</color>
-    <color name="lightGreen">#F1F8E9</color>
-    <color name="lightRed">#FFEBEE</color>
-    <color name="red">#FF0000</color>
+    <color name="complementary_900">#008B00</color>
+    <color name="gray_600">#757575</color>
+    <color name="red_50">#FFEBEE</color>
+    <color name="red_A700">#D50000</color>
     <color name="white">#FFFFFF</color>
 </resources>

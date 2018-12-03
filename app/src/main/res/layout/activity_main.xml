@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:baselineAligned="false">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/tb_main"
@@ -14,6 +12,10 @@
         android:id="@+id/fr_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:name="com.wuyts.nik.pantry.MainFragment" />
+    <include
+        android:id="@+id/fab_main"
+        layout="@layout/fab" />
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -65,7 +65,11 @@ public class MainActivity extends AppCompatActivity
         Cursor shopCursor = getContentResolver().query(CONTENT_URI, projection, null, null, sortOrder);
 
         // No menu shown if no shops in cursor
-        if (shopCursor == null || shopCursor.getCount() == 0) {
+        if (shopCursor == null) {
+            return false;
+        }
+        if (shopCursor.getCount() == 0) {
+            shopCursor.close();
             return false;
         }
 

@@ -120,12 +120,12 @@ public class DetailFragment extends Fragment {
             mShopTV.setText(mPantryItem.getShop());
             mNoteTV.setText(mPantryItem.getNote());
             if (mPantryItem.isInPantry()) {
-                mNameTV.setTextColor(getResources().getColor(R.color.green));
+                mNameTV.setTextColor(getResources().getColor(R.color.complementary_900));
                 mInPantryIV.setVisibility(View.VISIBLE);
                 mSetInPantryBtn.setVisibility(View.GONE);
                 mSetNotInPantryBtn.setVisibility(View.VISIBLE);
             } else {
-                mNameTV.setTextColor(getResources().getColor(R.color.red));
+                mNameTV.setTextColor(getResources().getColor(R.color.red_A700));
                 mInPantryIV.setVisibility(View.INVISIBLE);
                 mSetInPantryBtn.setVisibility(View.VISIBLE);
                 mSetNotInPantryBtn.setVisibility(View.GONE);

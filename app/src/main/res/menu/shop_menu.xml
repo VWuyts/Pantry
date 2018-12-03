@@ -4,8 +4,7 @@
 
     <item
         android:id="@+id/action_all_done"
-        android:icon="@drawable/ic_done_all_black_24dp"
-        android:iconTint="@color/white"
+        android:icon="@drawable/ic_done_all_white_24dp"
         android:title="@string/all_done"
         app:showAsAction="ifRoom"
         android:visible="true" />

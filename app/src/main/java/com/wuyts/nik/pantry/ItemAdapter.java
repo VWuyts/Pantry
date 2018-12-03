@@ -51,9 +51,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             holder.nameTV.setText(pantryItem.getName());
             holder.shopTV.setText(pantryItem.getShop());
             if (pantryItem.isInPantry()) {
-                holder.itemCL.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.lightGreen));
+                holder.itemCL.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.teal_50));
             } else {
-                holder.itemCL.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.lightRed));
+                holder.itemCL.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.red_50));
             }
         }
     } // end onBindViewHolder
