@@ -2,14 +2,21 @@
     <!-- app -->
     <string name="all_done">Helemaal klaar!</string>
     <string name="app_name">Voorraadkast</string>
+    <string name="btn_cancel">Annuleren</string>
+    <string name="btn_done">Klaar</string>
     <string name="checkbox">checkbox in voorraadkast</string>
     <string name="go_to_shop">Ga winkelen bij</string>
+    <string name="hint_name">Vul de naam in</string>
+    <string name="hint_note">Voeg een notitie toe</string>
     <string name="label_category">Categorie:</string>
     <string name="label_in_pantry">Aanwezig in voorraadkast</string>
+    <string name="label_name">Naam:</string>
     <string name="label_note">Notitie:</string>
     <string name="label_not_in_pantry">Niet aanwezig in voorraadkast</string>
     <string name="label_shop">Winkel:</string>
     <string name="pantry_filled">Je voorraadkast is gevuld!</string>
+    <string name="required_name">Naam is verplicht</string>
+    <string name="title_add_activity">Voeg item toe</string>
     <string name="title_detail_activity">Voorraadkast item</string>
     <string name="title_main_activity">Mijn voorraadkast</string>
 
