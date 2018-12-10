@@ -32,6 +32,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".AddItemActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
         <provider
             android:name=".data.PantryProvider"
@@ -54,6 +61,8 @@
         <service
             android:name=".PantryIntentService"
             android:exported="false" />
+
+
     </application>
 
 </manifest>

@@ -82,7 +82,9 @@ public class DetailFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mItemCursor.close();
+        if (mItemCursor != null) {
+            mItemCursor.close();
+        }
     } // end onDestroyView
 
     @Override

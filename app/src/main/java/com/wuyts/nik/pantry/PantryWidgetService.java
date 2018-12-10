@@ -96,7 +96,9 @@ class PantryRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
         return true;
     } // end hasStableIds
 
+
     /* Utility function */
+
     private Cursor getData() {
         // Revert to process' identity to be able to work with content provider
         final long identityToken = Binder.clearCallingIdentity();

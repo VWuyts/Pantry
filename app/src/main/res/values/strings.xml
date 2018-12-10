@@ -2,10 +2,15 @@
     <!-- app -->
     <string name="all_done">All done</string>
     <string name="app_name">Pantry</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_done">Done</string>
     <string name="checkbox">checkbox is in pantry</string>
     <string name="go_to_shop">Go shopping at</string>
+    <string name="hint_name">Fill out item name</string>
+    <string name="hint_note">Add a note</string>
     <string name="label_category">Category:</string>
     <string name="label_in_pantry">Present in pantry</string>
+    <string name="label_name">Name:</string>
     <string name="label_note">Note:</string>
     <string name="label_not_in_pantry">Not present in pantry</string>
     <string name="label_shop">Shop:</string>
@@ -14,6 +19,8 @@
     <string name="placeholder_name" translatable="false">item name</string>
     <string name="placeholder_note" translatable="false">item note</string>
     <string name="placeholder_shop" translatable="false">item shop</string>
+    <string name="required_name">Name is required</string>
+    <string name="title_add_activity">Add item</string>
     <string name="title_detail_activity">Pantry item</string>
     <string name="title_main_activity">My pantry</string>
 
@@ -72,6 +79,13 @@
     <string name="note_bio" translatable="false">Bio</string>
     <string name="note_bio_fair_trade">Bio and fair trade</string>
     <!-- shop data -->
+    <string name="shop_ah" translatable="false">Albert Heijn</string>
+    <string name="shop_aldi" translatable="false">Aldi</string>
+    <string name="shop_bio_planet" translatable="false">Bio-Planet</string>
+    <string name="shop_carrefour" translatable="false">Carrefour</string>
     <string name="shop_colruyt" translatable="false">Colruyt</string>
     <string name="shop_delhaize" translatable="false">Delhaize</string>
+    <string name="shop_lidl" translatable="false">Lidl</string>
+    <string name="shop_okay" translatable="false">Okay</string>
+    <string name="shop_spar" translatable="false">Spar</string>
 </resources>

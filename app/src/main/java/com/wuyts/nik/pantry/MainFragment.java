@@ -94,6 +94,14 @@ public class MainFragment extends Fragment implements ItemAdapter.ListItemClickL
         mOnListItemSelectedListener.onListItemSelected(itemId);
     } // end onListItemClick
 
+    public long getItemId(int itemPosition) {
+        return mItemAdapter.getItemId(itemPosition);
+    } // end getItemId
+
+    public boolean isInPantry(int itemPosition) {
+        return mItemAdapter.isInPantry(itemPosition);
+    } // end isInPantry
+
     public void swapCursor(Cursor newCursor) {
         if (mItemsCursor == newCursor) {
             return;
@@ -112,8 +120,7 @@ public class MainFragment extends Fragment implements ItemAdapter.ListItemClickL
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            long itemID = mItemAdapter.getItemId(viewHolder.getAdapterPosition());
-            mOnSwipeLeftListener.onSwipeLeft(itemID);
+            mOnSwipeLeftListener.onSwipeLeft(viewHolder.getAdapterPosition());
             // mItemAdapter.notifyItemChanged(viewHolder.getAdapterPosition()); // does not restore ViewHolder
             // Ref: https://stackoverflow.com/questions/31787272/android-recyclerview-itemtouchhelper-revert-swipe-and-restore-view-holder
             mItemTouchHelper.attachToRecyclerView(null);
@@ -128,6 +135,7 @@ public class MainFragment extends Fragment implements ItemAdapter.ListItemClickL
         void onListItemSelected(long itemId);
     } // end interface onListItemSelectedListener
     public interface OnSwipeLeftListener {
-        void onSwipeLeft(long itemId);
+        //void onSwipeLeft(long itemId);
+        void onSwipeLeft(int position);
     } // end interface OnSwipeLeftListener
 }

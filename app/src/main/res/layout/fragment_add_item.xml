@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddItemActivity">
+
+    <TextView
+        android:id="@+id/tv_label_add_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_name"
+        android:labelFor="@+id/et_add_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:padding="@dimen/padding_default"
+        android:layout_marginTop="@dimen/margin_default" />
+    <EditText
+        android:id="@+id/et_add_name"
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/hint_name"
+        app:layout_constraintTop_toTopOf="@id/tv_label_add_name"
+        app:layout_constraintLeft_toRightOf="@id/tv_label_add_name"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="@dimen/padding_default" />
+    <TextView
+        android:id="@+id/tv_label_add_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_category"
+        android:labelFor="@+id/sp_add_category"
+        app:layout_constraintTop_toBottomOf="@+id/et_add_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:padding="@dimen/padding_default"
+        android:layout_marginTop="@dimen/margin_default" />
+    <Spinner
+        android:id="@+id/sp_add_category"
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/tv_label_add_category"
+        app:layout_constraintLeft_toRightOf="@id/tv_label_add_name"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="@dimen/padding_default" />
+    <TextView
+        android:id="@+id/tv_label_add_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_shop"
+        android:labelFor="@+id/sp_add_shop"
+        app:layout_constraintTop_toBottomOf="@id/sp_add_category"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:padding="@dimen/padding_default"
+        android:layout_marginTop="@dimen/margin_default" />
+    <Spinner
+        android:id="@+id/sp_add_shop"
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/tv_label_add_shop"
+        app:layout_constraintLeft_toRightOf="@id/tv_label_add_name"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="@dimen/padding_default" />
+    <TextView
+        android:id="@+id/tv_label_add_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_note"
+        android:labelFor="@+id/et_add_note"
+        app:layout_constraintTop_toBottomOf="@id/sp_add_shop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:padding="@dimen/padding_default"
+        android:layout_marginTop="@dimen/margin_default" />
+    <EditText
+        android:id="@+id/et_add_note"
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/hint_note"
+        app:layout_constraintTop_toTopOf="@id/tv_label_add_note"
+        app:layout_constraintLeft_toRightOf="@id/tv_label_add_note"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="@dimen/padding_default" />
+    <TextView
+        android:id="@+id/tv_label_add_in_pantry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_in_pantry"
+        android:labelFor="@+id/sw_add_in_pantry"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_add_note"
+        android:padding="@dimen/padding_default"
+        android:layout_marginTop="@dimen/margin_default" />
+    <Switch
+        android:id="@+id/sw_add_in_pantry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/tv_label_add_in_pantry"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="@dimen/padding_default"/>
+    <Button
+        android:id="@+id/btn_add_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_cancel"
+        app:layout_constraintTop_toBottomOf="@+id/sw_add_in_pantry"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:padding="@dimen/padding_default"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginLeft="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginRight="@dimen/margin_default" />
+    <Button
+        android:id="@+id/btn_add_done"
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_done"
+        app:layout_constraintTop_toTopOf="@+id/btn_add_cancel"
+        app:layout_constraintLeft_toRightOf="@+id/btn_add_cancel"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginLeft="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginRight="@dimen/margin_default" />
+
+</android.support.constraint.ConstraintLayout>

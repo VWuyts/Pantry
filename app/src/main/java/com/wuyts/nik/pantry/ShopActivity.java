@@ -1,8 +1,5 @@
 package com.wuyts.nik.pantry;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.ActionBar;
@@ -15,6 +12,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+
+import com.wuyts.nik.pantry.utilities.Utils;
 
 import static android.provider.BaseColumns._ID;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_IS_OK;
@@ -102,25 +101,8 @@ public class ShopActivity extends AppCompatActivity {
     /* Utility function */
 
     private void setAllDone(String shop) {
-        String selection = COLUMN_SHOP + " = ?";
-        String[] selectionArgs = new String[]{shop};
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_IS_OK, 1);
-        getContentResolver().update(CONTENT_URI, values, selection, selectionArgs);
-
-        // Update widget data
-        updateWidget();
-
-        // Go back to MainActivity
-        Intent mainIntent = new Intent(ShopActivity.this, MainActivity.class);
-        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        mainIntent.putExtra(MainActivity.UPDATE_CURSOR_KEY, true);
-        startActivity(mainIntent);
+        Utils.setAllDoneInDb(this, new String[]{shop});
+        Utils.updateWidget(this);
+        Utils.goToMainActivity(this, true);
     }
-
-    private void updateWidget() {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, PantryAppWidget.class));
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.aw_lv_shops);
-    } // end updateWidget
 }

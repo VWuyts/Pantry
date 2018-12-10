@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="categories">
+        <item>@string/cat_fruit</item>
+        <item>@string/cat_vegetables</item>
+        <item>@string/cat_pasta</item>
+        <item>@string/cat_canned</item>
+        <item>@string/cat_spices</item>
+        <item>@string/cat_sauces</item>
+        <item>@string/cat_breakfast</item>
+        <item>@string/cat_cheese</item>
+        <item>@string/cat_dairy</item>
+        <item>@string/cat_frozen</item>
+    </string-array>
+    <string-array name="shops">
+        <item>@string/shop_ah</item>
+        <item>@string/shop_aldi</item>
+        <item>@string/shop_bio_planet</item>
+        <item>@string/shop_carrefour</item>
+        <item>@string/shop_colruyt</item>
+        <item>@string/shop_delhaize</item>
+        <item>@string/shop_lidl</item>
+        <item>@string/shop_okay</item>
+        <item>@string/shop_spar</item>
+    </string-array>
+
+    <!-- data arrays -->
     <string-array name="breakfast_data">
         <item>@string/item_breakfast_corn</item>
         <item>@string/item_breakfast_honey</item>

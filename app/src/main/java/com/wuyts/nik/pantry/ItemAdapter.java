@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.wuyts.nik.pantry.data.PantryItem;
 
 import static android.provider.BaseColumns._ID;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_IS_OK;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
@@ -20,12 +21,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private final ListItemClickListener mListItemClickListener;
     private boolean mDataValid;
     private int mIdColumn;
+    private int mInPantryColumn;
 
-    public ItemAdapter(Cursor cursor, ListItemClickListener listener) {
+    ItemAdapter(Cursor cursor, ListItemClickListener listener) {
         mCursor = cursor;
         mListItemClickListener = listener;
         mDataValid = mCursor != null;
         mIdColumn = mDataValid ? mCursor.getColumnIndex(_ID) : -1;
+        mInPantryColumn = mDataValid ? mCursor.getColumnIndex(COLUMN_IS_OK) : -1;
         setHasStableIds(true);
     } // end constructor
 
@@ -70,6 +73,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         return 0;
     } // end getItemId
 
+    boolean isInPantry(int position) {
+        if (mDataValid && mCursor.moveToPosition(position))
+            return mCursor.getInt(mInPantryColumn) > 0;
+        return false;
+    } // end getIsInPantry
+
     Cursor swapCursor(Cursor newCursor) {
         if (newCursor == mCursor) {
             return null;
@@ -78,6 +87,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         mCursor = newCursor;
         mDataValid = mCursor != null;
         mIdColumn = mDataValid ? mCursor.getColumnIndex(_ID) : -1;
+        mInPantryColumn = mDataValid ? mCursor.getColumnIndex(COLUMN_IS_OK) : -1;
         notifyDataSetChanged();
         return oldCursor;
     } // end swapCursor

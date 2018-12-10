@@ -1,36 +1,40 @@
 package com.wuyts.nik.pantry;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
+
+import com.wuyts.nik.pantry.utilities.Utils;
 
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_CATEGORY;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_IS_OK;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NAME;
+import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_NOTE;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.COLUMN_SHOP;
 import static com.wuyts.nik.pantry.data.PantryContract.Item.CONTENT_URI;
 
 public class MainActivity extends AppCompatActivity
-        implements DetailFragment.OnToggleIsInPantryListener,
+        implements AddItemFragment.OnButtonClickListener, DetailFragment.OnToggleIsInPantryListener,
         MainFragment.OnListItemSelectedListener, MainFragment.OnSwipeLeftListener {
 
     private ArrayList<String> mShopList;
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        View detailFragment = findViewById(R.id.fr_detail);
+        View detailFragment = findViewById(R.id.fr_dynamic);
         mMasterDetail = detailFragment != null && detailFragment.getVisibility() == View.VISIBLE;
 
         Intent intent = getIntent();
@@ -55,21 +59,23 @@ public class MainActivity extends AppCompatActivity
 
         // Toolbar
         Toolbar toolbar = mMasterDetail ? (Toolbar) findViewById(R.id.tb_main) : (Toolbar) findViewById(R.id.tb_in_ctb);
+        toolbar.setTitle(R.string.title_main_activity);
         setSupportActionBar(toolbar);
-        if (mMasterDetail) {
-            toolbar.setTitle(R.string.title_main_activity);
-        } else {
-            CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.ctb);
-            collapsingToolbarLayout.setTitle(getResources().getString(R.string.title_main_activity));
-        }
 
         // Set click listener on FAB
         final FloatingActionButton fab = findViewById(R.id.fab_main);
-        final Context context = this;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "add pantry item not yet implemented", Toast.LENGTH_LONG).show();
+                if (mMasterDetail) {
+                    AddItemFragment addItemFragment = new AddItemFragment();
+
+                    // Display fragment
+                    replaceDynamicFragment(addItemFragment);
+                } else {
+                    Intent addItemIntent = new Intent(MainActivity.this, AddItemActivity.class);
+                    startActivity(addItemIntent);
+                }
             }
         });
         // Hide FAB when scrolling down
@@ -142,10 +148,44 @@ public class MainActivity extends AppCompatActivity
     } // end onOptionsItemSelected
 
     @Override
+    public void onAddItem() {
+        ContentValues values = new ContentValues();
+        String name = ((EditText) findViewById(R.id.et_add_name)).getText().toString().trim();
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(this, getResources().getText(R.string.required_name), Toast.LENGTH_SHORT).show();
+        } else {
+            values.put(COLUMN_NAME, name);
+            String category = ((Spinner) findViewById(R.id.sp_add_category)).getSelectedItem().toString();
+            values.put(COLUMN_CATEGORY, category);
+            String shop = ((Spinner) findViewById(R.id.sp_add_shop)).getSelectedItem().toString();
+            values.put(COLUMN_SHOP, shop);
+            String note = ((EditText) findViewById(R.id.et_add_note)).getText().toString().trim();
+            values.put(COLUMN_NOTE, note);
+            boolean isInPantry = ((Switch) findViewById(R.id.sw_add_in_pantry)).isChecked();
+            values.put(COLUMN_IS_OK, isInPantry);
+
+            getContentResolver().insert(CONTENT_URI, values);
+
+            // Update main fragment and widget data
+            updateMainCursor();
+            Utils.updateWidget(this);
+
+            clearDetailFragment();
+        }
+    } // end onAddItem
+
+    @Override
+    public void onCancel() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+    } // end onCancel
+
+    @Override
     public void onToggleIsInPantry(long itemId, boolean isInPantry) {
         toggleIsInPantry(itemId, isInPantry);
 
-        // Change cursor in detail fragment
         if (mMasterDetail) {
             updateDetailCursor(itemId);
         }
@@ -161,72 +201,56 @@ public class MainActivity extends AppCompatActivity
             DetailFragment detailFragment = new DetailFragment();
 
             // Set data of pantry item
-            Cursor itemCursor = getPantryItem(itemId, null);
+            Cursor itemCursor = Utils.getPantryItem(this, itemId, null);
             detailFragment.setItemCursor(itemCursor);
 
             // Display fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            if (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStack();
-            }
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fr_detail, detailFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            replaceDynamicFragment(detailFragment);
         }
     } // end onListItemSelected
 
     @Override
-    public void onSwipeLeft(long itemId) {
-        // Get isInPantry data of pantry item
-        boolean isInPantry;
-        String[] projection = {COLUMN_IS_OK};
-        Cursor itemCursor = getPantryItem(itemId, projection);
-
-        if (itemCursor != null && itemCursor.moveToFirst()) {
-            isInPantry = itemCursor.getInt(itemCursor.getColumnIndex(COLUMN_IS_OK)) > 0;
-            itemCursor.close();
+    public void onSwipeLeft(int position) {
+        MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.fr_main);
+        if (mainFragment != null) {
+            boolean isInPantry = mainFragment.isInPantry(position);
+            long itemId = mainFragment.getItemId(position);
             toggleIsInPantry(itemId, isInPantry);
-        }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack();
+            clearDetailFragment();
         }
     } // end onSwipeLeft
 
 
     /* Utility functions */
 
-    private Cursor getPantryItem(long itemId, String[] projection) {
-        String selection = _ID + " = ?";
-        String[] selectionArgs = {Long.toString(itemId)};
-        Uri requiredItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemId)).build();
-        return getContentResolver().query(requiredItem, projection, selection, selectionArgs, null);
-    } // end getPantryItem
+    private void clearDetailFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+    } // end clearDetailFragment
+
+    private void replaceDynamicFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fr_dynamic, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
     private void toggleIsInPantry(long itemId, boolean isInPantry) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_IS_OK, !isInPantry);
-        String itemIdStr = Long.toString(itemId);
-        String selection = _ID + " = ?";
-        String[] selectionArgs = {itemIdStr};
-        Uri updateItem = CONTENT_URI.buildUpon().appendPath(itemIdStr).build();
-
-        // Change pantry item in database
-        getContentResolver().update(updateItem, values, selection, selectionArgs);
-
-        // Update main fragment and widget data
+        Utils.toggleIsInPantry(this, itemId, isInPantry);
         updateMainCursor();
-        updateWidget();
+        Utils.updateWidget(this);
     } // end toggleIsInPantry
 
     private void updateDetailCursor(long itemId) {
-        String selection = _ID + " = ?";
-        String[] selectionArgs = {Long.toString(itemId)};
-        Uri selectedItem = CONTENT_URI.buildUpon().appendPath(Long.toString(itemId)).build();
-        Cursor itemCursor = getContentResolver().query(selectedItem, null, selection, selectionArgs, null);
-        DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.fr_detail);
+        Cursor itemCursor = Utils.getPantryItem(this, itemId, null);
+        DetailFragment detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.fr_dynamic);
         if (detailFragment != null) {
             Cursor oldCursor = detailFragment.swapCursor(itemCursor);
             oldCursor.close();
@@ -241,10 +265,4 @@ public class MainActivity extends AppCompatActivity
             mainFragment.swapCursor(newCursor);
         }
     } // end updateMainCursor
-
-    private void updateWidget() {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, PantryAppWidget.class));
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.aw_lv_shops);
-    } // end updateWidget
 }
