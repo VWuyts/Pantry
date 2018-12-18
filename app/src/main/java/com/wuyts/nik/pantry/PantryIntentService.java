@@ -19,6 +19,9 @@ public class PantryIntentService extends IntentService {
             final String action = intent.getAction();
             if (ACTION_ALL_DONE.equals(action)) {
                 Utils.setAllDoneInDb(this, null);
+                Utils.updateWidget(this);
+
+                // TODO: if app is running: swap cursor in MainActivity
             }
         }
     } // end onHandleIntent

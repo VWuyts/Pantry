@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.wuyts.nik.pantry.data.PantryItem;
 
 public class DetailFragment extends Fragment {
+    // TODO: for real app, this should be the 'edit item' fragment (instead of just showing info)
     private Button mSetInPantryBtn;
     private Button mSetNotInPantryBtn;
     private ImageView mInPantryIV;
