@@ -12,7 +12,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static org.hamcrest.core.Is.is;
 
-public final class TestUtils {
+final class TestUtils {
 
     // Ref: http://blog.sqisland.com/2015/05/espresso-match-toolbar-title.html
     public static ViewInteraction matchToolbarTitle(CharSequence title) {
