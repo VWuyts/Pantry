@@ -32,7 +32,7 @@ public class DetailFragment extends Fragment {
     } // end constructor
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             mOnToggleIsInPantryListener = (OnToggleIsInPantryListener)context;

@@ -1,9 +1,9 @@
 package com.wuyts.nik.pantry;
 
 import android.content.Intent;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class AddItemActivityTest {
 
     @Test
     public void checkToolbarTitle() {
-        CharSequence title = InstrumentationRegistry.getTargetContext().getString(R.string.title_add_activity);
+        CharSequence title = InstrumentationRegistry.getInstrumentation().getTargetContext().getString(R.string.title_add_activity);
         TestUtils.matchToolbarTitle(title).check(matches(isDisplayed()));
     }
 

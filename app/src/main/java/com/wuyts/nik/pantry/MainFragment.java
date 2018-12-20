@@ -33,7 +33,7 @@ public class MainFragment extends Fragment implements ItemAdapter.ListItemClickL
     } // end constructor
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             mOnListItemSelectedListener = (OnListItemSelectedListener)context;

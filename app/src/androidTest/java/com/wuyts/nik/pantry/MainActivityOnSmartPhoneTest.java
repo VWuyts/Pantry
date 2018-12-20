@@ -1,16 +1,15 @@
 package com.wuyts.nik.pantry;
 
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
@@ -28,7 +27,7 @@ public class MainActivityOnSmartPhoneTest {
 
     @Test
     public void checkToolbarTitle() {
-        CharSequence title = InstrumentationRegistry.getTargetContext().getString(R.string.title_main_activity);
+        CharSequence title = InstrumentationRegistry.getInstrumentation().getTargetContext().getString(R.string.title_main_activity);
         TestUtils.matchToolbarTitle(title).check(matches(isDisplayed()));
     }
 

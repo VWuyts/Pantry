@@ -1,9 +1,9 @@
 package com.wuyts.nik.pantry;
 
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class MainActivityOnTabletTest {
 
     @Test
     public void checkToolbarTitle() {
-        CharSequence title = InstrumentationRegistry.getTargetContext().getString(R.string.title_main_activity);
+        CharSequence title = InstrumentationRegistry.getInstrumentation().getTargetContext().getString(R.string.title_main_activity);
         TestUtils.matchToolbarTitle(title).check(matches(isDisplayed()));
     }
 
