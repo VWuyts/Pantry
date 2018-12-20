@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -37,15 +38,29 @@ public class MainActivityOnSmartPhoneTest {
     }
 
     @Test
-    public void clickOnItemInRecyclerView() {
-        onView(withId(R.id.rv_pantry_items)).perform(RecyclerViewActions.actionOnItemAtPosition(FIRST_ITEM, click()));
+    public void clickOnItemInRecyclerViewIntent() {
+        onView(withId(R.id.rv_pantry_items)).check(matches(isDisplayed()))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(FIRST_ITEM, click()));
         intended(hasExtraWithKey(MainActivity.ITEM_ID_KEY));
         intended(hasComponent(DetailActivity.class.getName()));
     }
 
     @Test
-    public void clickFab() {
+    public void clickOnItemInRecyclerView() {
+        onView(withId(R.id.rv_pantry_items))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(FIRST_ITEM, click()));
+        onView(withId(R.id.frame_detail)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void clickFabIntent() {
         onView(withId(R.id.fab_main)).check(matches(isDisplayed())).perform(click());
         intended(hasComponent(AddItemActivity.class.getName()));
+    }
+
+    @Test
+    public void clickFab() {
+        onView(withId(R.id.fab_main)).perform(click());
+        onView(withId(R.id.frame_add_item)).check(matches(isDisplayed()));
     }
 }
