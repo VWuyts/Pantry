@@ -3,12 +3,12 @@ package com.wuyts.nik.pantry;
 import android.content.Intent;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.clearText;
@@ -31,7 +31,7 @@ public class AddItemActivityTest {
 
     @Test
     public void checkToolbarTitle() {
-        CharSequence title = InstrumentationRegistry.getInstrumentation().getTargetContext().getString(R.string.title_add_activity);
+        CharSequence title = getApplicationContext().getString(R.string.title_add_activity);
         TestUtils.matchToolbarTitle(title).check(matches(isDisplayed()));
     }
 
@@ -48,9 +48,15 @@ public class AddItemActivityTest {
     }
 
     @Test
-    public void clickCancelGoToMainActivity() {
+    public void clickCancelGoToMainActivityIntent() {
         onView(withId(R.id.btn_add_cancel)).check(matches(isDisplayed())).perform(click());
         intended(hasFlag(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         intended(hasComponent(MainActivity.class.getName()));
+    }
+
+    @Test
+    public void clickCancelGoToMainActivity() {
+        onView(withId(R.id.btn_add_cancel)).perform(click());
+        onView(withId(R.id.fr_main)).check(matches(isDisplayed()));
     }
 }

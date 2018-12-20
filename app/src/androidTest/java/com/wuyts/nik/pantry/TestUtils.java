@@ -15,7 +15,7 @@ import static org.hamcrest.core.Is.is;
 final class TestUtils {
 
     // Ref: http://blog.sqisland.com/2015/05/espresso-match-toolbar-title.html
-    public static ViewInteraction matchToolbarTitle(CharSequence title) {
+    static ViewInteraction matchToolbarTitle(CharSequence title) {
         return onView(isAssignableFrom(Toolbar.class)).check(matches(withToolbarTitle(is(title))));
     }
 
